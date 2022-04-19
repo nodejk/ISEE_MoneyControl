@@ -6,7 +6,7 @@ import { Text, View } from "../components/Themed";
 export default function TabTwoScreen() {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Charts</Text>
+      <Text style={styles.title}>Profile personal</Text>
       <View
         style={styles.separator}
         lightColor="#eee"
