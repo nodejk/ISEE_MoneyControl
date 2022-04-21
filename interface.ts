@@ -1,3 +1,6 @@
+import { Icon } from "@expo/vector-icons/build/createIconSet";
+import { NavigationProp } from "@react-navigation/native";
+
 export interface itemDescription {
   date: string;
   category: string;
@@ -11,12 +14,24 @@ export interface itemDescription {
 }
 
 export interface userDescription {
-  income: number;
-  cycle: "monthly" | "weekly" | "daily";
-  threshold?: number;
+  income?: number;
+  thresholdExpense?: number;
+  profilePicture?: number;
+  firstName?: string;
+  lastName?: string;
+  repeatedUserTransactions?: String[];
 }
 
-const userDes: userDescription = {
-  income: 123,
-  cycle: "monthly",
-};
+export interface profileLayoutCardProps {
+  cardName: string;
+  topGap?: number;
+  bottomGap?: number;
+  topBorder?: number;
+  bottomBorder?: number;
+  children?: React.ReactNode;
+  navigation?: NavigationProp<any, any>;
+}
+
+// export interface RouterProps {
+//   navigation: NavigationProp<any, any>;
+// }

@@ -5,54 +5,6 @@ import { Text, View } from "../components/Themed";
 import { RootTabScreenProps } from "../types";
 import { itemDescription } from "../interface";
 
-const dummy: itemDescription[] = [
-  {
-    date: "2342",
-    category: "asdf",
-    paymentAmount: 123,
-    paymentMethod: "asfs",
-    currency: "EURO",
-    id: 1,
-    name: "dsaf",
-  },
-  {
-    date: "2342",
-    category: "asdfjlla;blw",
-    paymentAmount: 123,
-    paymentMethod: "asfs",
-    currency: "EURO",
-    id: 1,
-    name: "dsaf",
-  },
-  {
-    date: "2342",
-    category: "asdf",
-    paymentAmount: 123,
-    paymentMethod: "asfs",
-    currency: "EURO",
-    id: 1,
-    name: "dsaf",
-  },
-  {
-    date: "2342",
-    category: "asdf",
-    paymentAmount: 123,
-    paymentMethod: "asfs",
-    currency: "EURO",
-    id: 1,
-    name: "dsaf",
-  },
-  {
-    date: "2342",
-    category: "asdf",
-    paymentAmount: 123,
-    paymentMethod: "asfs",
-    currency: "EURO",
-    id: 1,
-    name: "dsaf",
-  },
-];
-
 export default function TabOneScreen({
   navigation,
 }: RootTabScreenProps<"TabOne">) {

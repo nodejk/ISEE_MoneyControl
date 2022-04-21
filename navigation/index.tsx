@@ -16,11 +16,12 @@ import { ColorSchemeName, Pressable } from "react-native";
 
 import Colors from "../constants/Colors";
 import useColorScheme from "../hooks/useColorScheme";
-import ModalScreen from "../screens/ModalScreen";
+import HelpScreen from "../screens/HelpScreen";
 import NotFoundScreen from "../screens/NotFoundScreen";
 import TabOneScreen from "../screens/TabOneScreen";
 import TabTwoScreen from "../screens/TabTwoScreen";
 import MyProfile from "../screens/MyProfile";
+import EditProfileScreen from "../screens/EditProfileScreen";
 import {
   RootStackParamList,
   RootTabParamList,
@@ -63,7 +64,11 @@ function RootNavigator() {
         options={{ title: "Oops!" }}
       />
       <Stack.Group screenOptions={{ presentation: "modal" }}>
-        <Stack.Screen name="Modal" component={ModalScreen} />
+        <Stack.Screen name="Help" component={HelpScreen} />
+      </Stack.Group>
+
+      <Stack.Group screenOptions={{ presentation: "card" }}>
+        <Stack.Screen name="EditProfile" component={EditProfileScreen} />
       </Stack.Group>
     </Stack.Navigator>
   );
@@ -93,7 +98,7 @@ function BottomTabNavigator() {
           tabBarIcon: ({ color }) => <TabBarIcon name="euro" color={color} />,
           headerRight: () => (
             <Pressable
-              onPress={() => navigation.navigate("Modal")}
+              onPress={() => navigation.navigate("Help")}
               style={({ pressed }) => ({
                 opacity: pressed ? 0.5 : 1,
               })}
@@ -108,6 +113,7 @@ function BottomTabNavigator() {
           ),
         })}
       />
+
       <BottomTab.Screen
         name="TabTwo"
         component={TabTwoScreen}

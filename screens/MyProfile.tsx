@@ -1,17 +1,15 @@
-import { StyleSheet } from "react-native";
-
-import EditScreenInfo from "../components/EditScreenInfo";
+import { StyleSheet, SafeAreaView } from "react-native";
+import useColorScheme from "../hooks/useColorScheme";
+import UserProfileCard from "./UserProfileCard";
 import { Text, View } from "../components/Themed";
+import React from "react";
+import { RootTabScreenProps } from "../types";
 
-export default function TabTwoScreen() {
+export default function TabTwoScreen({ navigation }: RootTabScreenProps<any>) {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Profile personal</Text>
-      <View
-        style={styles.separator}
-        lightColor="#eee"
-        darkColor="rgba(255,255,255,0.1)"
-      />
+      <View style={styles.profileSection}></View>
+      <UserProfileCard navigation={navigation} route={"s"} />
     </View>
   );
 }
@@ -19,8 +17,6 @@ export default function TabTwoScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
   },
   title: {
     fontSize: 20,
@@ -31,4 +27,9 @@ const styles = StyleSheet.create({
     height: 1,
     width: "80%",
   },
+  profileSection: {
+    paddingBottom: 10,
+  },
+  settingsSection: {},
+  userInformationFont: {},
 });
