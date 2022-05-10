@@ -21,6 +21,11 @@ export type RootStackParamList = {
   Help: undefined;
   NotFound: undefined;
   EditProfile: undefined;
+  ScheduleTransactions: undefined;
+  AddTransaction: undefined;
+  EditTransaction: undefined;
+  Settings: undefined;
+  FilterModal: undefined;
 };
 
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> =

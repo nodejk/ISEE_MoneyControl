@@ -13,15 +13,22 @@ import {
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import * as React from "react";
 import { ColorSchemeName, Pressable } from "react-native";
-
+import Icon from "react-native-vector-icons/FontAwesome";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import { HeaderButton } from "../screens/uiComponents/HeaderButtons";
 import Colors from "../constants/Colors";
 import useColorScheme from "../hooks/useColorScheme";
 import HelpScreen from "../screens/HelpScreen";
+import { TransactionModal } from "../screens/uiComponents/TransactionModal";
 import NotFoundScreen from "../screens/NotFoundScreen";
 import TabOneScreen from "../screens/TabOneScreen";
 import TabTwoScreen from "../screens/TabTwoScreen";
 import MyProfile from "../screens/MyProfile";
 import EditProfileScreen from "../screens/EditProfileScreen";
+import { ScheduleTransactionsScreen } from "../screens/ScheduleTransactionScreen";
+import { SettingsScreen } from "../screens/uiComponents/SettingsScreen";
+import { FilterModal } from "../screens/uiComponents/FilterModal";
+import { StyleSheet } from "react-native";
 import {
   RootStackParamList,
   RootTabParamList,
@@ -49,8 +56,13 @@ export default function Navigation({
  * https://reactnavigation.org/docs/modal
  */
 const Stack = createNativeStackNavigator<RootStackParamList>();
+const iconSize = 35;
 
 function RootNavigator() {
+  const margins = { marginTop: 18, marginRight: 10, marginLeft: 10 };
+  const colorScheme = useColorScheme();
+  const headerColor = colorScheme === "dark" ? "black" : "white";
+
   return (
     <Stack.Navigator>
       <Stack.Screen
@@ -64,11 +76,131 @@ function RootNavigator() {
         options={{ title: "Oops!" }}
       />
       <Stack.Group screenOptions={{ presentation: "modal" }}>
-        <Stack.Screen name="Help" component={HelpScreen} />
+        <Stack.Screen
+          name="FilterModal"
+          component={FilterModal}
+          options={({ navigation }: any) => ({
+            title: "",
+            headerTransparent: true,
+            headerRight: () => (
+              <HeaderButton
+                name={"check"}
+                size={iconSize}
+                {...margins}
+                color={"green"}
+              ></HeaderButton>
+            ),
+            headerLeft: () => (
+              <HeaderButton
+                name={"close"}
+                size={iconSize}
+                {...margins}
+                onPress={() => navigation.goBack()}
+                color={"red"}
+              ></HeaderButton>
+            ),
+          })}
+        />
+        <Stack.Screen
+          name="EditTransaction"
+          component={TransactionModal}
+          options={({ navigation }: any) => ({
+            title: "",
+            headerTransparent: true,
+            headerRight: () => (
+              <HeaderButton
+                name={"check"}
+                size={iconSize}
+                {...margins}
+                color={"green"}
+              ></HeaderButton>
+            ),
+            headerLeft: () => (
+              <HeaderButton
+                name={"close"}
+                size={iconSize}
+                {...margins}
+                onPress={() => navigation.goBack()}
+                color={"red"}
+              ></HeaderButton>
+            ),
+          })}
+        />
+        <Stack.Screen
+          name="AddTransaction"
+          component={TransactionModal}
+          options={({ navigation }: any) => ({
+            title: "",
+            headerShadowVisible: false,
+            headerTransparent: true,
+            headerRight: () => (
+              <HeaderButton
+                name={"check"}
+                size={iconSize}
+                {...margins}
+                color={"green"}
+              ></HeaderButton>
+            ),
+            headerLeft: () => (
+              <HeaderButton
+                name={"close"}
+                size={iconSize}
+                {...margins}
+                onPress={() => navigation.goBack()}
+                color={"red"}
+              ></HeaderButton>
+            ),
+          })}
+        />
       </Stack.Group>
 
       <Stack.Group screenOptions={{ presentation: "card" }}>
-        <Stack.Screen name="EditProfile" component={EditProfileScreen} />
+        <Stack.Screen
+          name="Help"
+          component={HelpScreen}
+          options={{
+            title: "",
+            headerShadowVisible: false,
+            headerStyle: { backgroundColor: headerColor },
+          }}
+        />
+        <Stack.Screen
+          name="EditProfile"
+          component={EditProfileScreen}
+          options={{
+            title: "",
+            headerShadowVisible: false,
+            headerTransparent: true,
+          }}
+        />
+        <Stack.Screen
+          name="Settings"
+          component={SettingsScreen}
+          options={{
+            title: "",
+            headerShadowVisible: false,
+            headerTransparent: true,
+          }}
+        />
+        <Stack.Screen
+          name="ScheduleTransactions"
+          component={ScheduleTransactionsScreen}
+          options={({ navigation }: any) => ({
+            title: "",
+            headerShadowVisible: false,
+            headerTransparent: true,
+            headerRight: () => (
+              <Pressable onPress={() => navigation.navigate("AddTransaction")}>
+                <MaterialCommunityIcons
+                  name="plus"
+                  size={iconSize}
+                  style={styles.modalHeaderButton}
+                  color={Colors["light"].tint}
+                />
+              </Pressable>
+            ),
+          })}
+        />
       </Stack.Group>
     </Stack.Navigator>
   );
@@ -82,32 +214,54 @@ const BottomTab = createBottomTabNavigator<RootTabParamList>();
 
 function BottomTabNavigator() {
   const colorScheme = useColorScheme();
+  const headerColor = colorScheme === "dark" ? "black" : "white";
 
   return (
     <BottomTab.Navigator
       initialRouteName="TabOne"
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme].tint,
+        tabBarStyle: { height: 90 },
       }}
     >
       <BottomTab.Screen
         name="TabOne"
         component={TabOneScreen}
         options={({ navigation }: RootTabScreenProps<"TabOne">) => ({
-          title: "My expenses",
-          tabBarIcon: ({ color }) => <TabBarIcon name="euro" color={color} />,
-          headerRight: () => (
+          title: "",
+          headerShadowVisible: false,
+          headerStyle: { backgroundColor: headerColor },
+          tabBarIcon: ({ color }) => (
+            <TabBarIconMUI name="currency-eur" color={color} />
+          ),
+          headerLeft: () => (
             <Pressable
-              onPress={() => navigation.navigate("Help")}
+              onPress={() => navigation.navigate("FilterModal")}
               style={({ pressed }) => ({
                 opacity: pressed ? 0.5 : 1,
               })}
             >
-              <FontAwesome
-                name="info-circle"
-                size={25}
-                color={Colors[colorScheme].text}
-                style={{ marginRight: 15 }}
+              <MaterialCommunityIcons
+                name="filter-variant"
+                size={iconSize - 1}
+                style={{ marginLeft: 18 }}
+                color={Colors["light"].tint}
+              />
+            </Pressable>
+          ),
+
+          headerRight: () => (
+            <Pressable
+              onPress={() => navigation.navigate("AddTransaction")}
+              style={({ pressed }) => ({
+                opacity: pressed ? 0.5 : 1,
+              })}
+            >
+              <MaterialCommunityIcons
+                name="plus"
+                size={iconSize}
+                style={{ marginRight: 18 }}
+                color={Colors["light"].tint}
               />
             </Pressable>
           ),
@@ -117,20 +271,41 @@ function BottomTabNavigator() {
       <BottomTab.Screen
         name="TabTwo"
         component={TabTwoScreen}
-        options={{
-          title: "Charts",
+        options={({ navigation }: RootTabScreenProps<"TabOne">) => ({
+          title: "",
+          headerShadowVisible: false,
+          headerStyle: { backgroundColor: headerColor },
           tabBarIcon: ({ color }) => (
-            <TabBarIcon name="area-chart" color={color} />
+            <TabBarIconMUI name="finance" color={color} />
           ),
-        }}
+          headerLeft: () => (
+            <Pressable
+              onPress={() => navigation.navigate("FilterModal")}
+              style={({ pressed }) => ({
+                opacity: pressed ? 0.5 : 1,
+              })}
+            >
+              <MaterialCommunityIcons
+                name="filter-variant"
+                size={iconSize - 1}
+                style={{ marginLeft: 18 }}
+                color={Colors["light"].tint}
+              />
+            </Pressable>
+          ),
+        })}
       />
 
       <BottomTab.Screen
         name="TabThree"
         component={MyProfile}
         options={{
-          title: "My Profile",
-          tabBarIcon: ({ color }) => <TabBarIcon name="user" color={color} />,
+          title: "",
+          headerTransparent: true,
+          headerShadowVisible: false,
+          tabBarIcon: ({ color }) => (
+            <TabBarIconMUI name="account" color={color} />
+          ),
         }}
       />
     </BottomTab.Navigator>
@@ -144,5 +319,18 @@ function TabBarIcon(props: {
   name: React.ComponentProps<typeof FontAwesome>["name"];
   color: string;
 }) {
-  return <FontAwesome size={30} style={{ marginBottom: -3 }} {...props} />;
+  return <FontAwesome size={35} style={{ marginBottom: -3 }} {...props} />;
 }
+
+function TabBarIconMUI(props: { name: string; color: string }) {
+  return (
+    <MaterialCommunityIcons size={35} style={{ marginBottom: -3 }} {...props} />
+  );
+}
+
+const styles = StyleSheet.create({
+  modalHeaderButton: {
+    marginRight: 10,
+    marginTop: 10,
+  },
+});

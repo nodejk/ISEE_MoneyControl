@@ -17,12 +17,13 @@ import {
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import { Card } from "react-native-paper";
-import { EditProfileLayoutCard } from "./uiComponents/EditProfileLayoutCard";
-import { InputField } from "./uiComponents/InputField";
+import { EditProfileLayoutCard } from "./EditProfileLayoutCard";
+import { InputField } from "./InputField";
 import BottomSheet from "@gorhom/bottom-sheet";
 import { Avatar, Caption, Title } from "react-native-paper";
 import { useEffect } from "react";
-export default function EditProfileScreen() {
+
+export function SettingsScreen() {
   const colorScheme = useColorScheme();
   const borderWidth = 1;
   const borderRadius = 9;
@@ -30,6 +31,7 @@ export default function EditProfileScreen() {
   const cardBackground = colorScheme === "dark" ? "rgb(24, 24, 24)" : "white";
   const cardBorderColor =
     colorScheme === "dark" ? "rgb(40, 40, 40)" : "rgb(220, 220, 220)";
+  const textColor = colorScheme === "dark" ? "white" : "black";
 
   const keyboardVerticalOffset = 20;
 
@@ -53,37 +55,14 @@ export default function EditProfileScreen() {
         >
           <Text
             style={{
-              color: "black",
               fontSize: 40,
               fontWeight: "bold",
+              color: textColor,
+              marginBottom: 75,
             }}
           >
-            Edit Profile
+            Settings
           </Text>
-          <View style={styles.profilePicture}>
-            <Avatar.Image
-              source={{
-                uri: "https://api.adorable.io/avatars/80/abott@adorable.png",
-              }}
-              size={150}
-            />
-            <MaterialCommunityIcons
-              style={styles.editIcon}
-              size={25}
-              name={"pencil-outline"}
-            ></MaterialCommunityIcons>
-
-            {/* <Avatar.Image
-              source={{
-                uri: ,
-              }}
-              size={150}
-            />
-            <MaterialCommunityIcons
-              style={styles.editIcon}
-              name={"pencil-outline"}
-            ></MaterialCommunityIcons> */}
-          </View>
           <InputField
             name={"First Name"}
             backgroundColor={cardBackground}

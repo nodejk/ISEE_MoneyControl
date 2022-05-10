@@ -1,15 +1,14 @@
 import { StyleSheet, SafeAreaView } from "react-native";
-import useColorScheme from "../hooks/useColorScheme";
-import UserProfileCard from "./UserProfileCard";
-import { Text, View } from "../components/Themed";
+import UserProfileLayout from "./uiComponents/UserProfileLayout";
+import { View } from "../components/Themed";
 import React from "react";
-import { RootTabScreenProps } from "../types";
+import { RootTabScreenProps, RootStackScreenProps } from "../types";
 
 export default function TabTwoScreen({ navigation }: RootTabScreenProps<any>) {
   return (
     <View style={styles.container}>
       <View style={styles.profileSection}></View>
-      <UserProfileCard navigation={navigation} route={"s"} />
+      <UserProfileLayout navigation={navigation} route={null} />
     </View>
   );
 }
