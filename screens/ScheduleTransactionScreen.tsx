@@ -1,17 +1,20 @@
-import { StatusBar, StyleSheet, useColorScheme } from "react-native";
-
-import EditScreenInfo from "../components/EditScreenInfo";
-import { Text, View } from "../components/Themed";
-import { RootTabScreenProps } from "../types";
-import { TransactionDescription } from "../interface";
+import { FontAwesome } from "@expo/vector-icons";
 import React from "react";
+import FlatList, { SafeAreaView } from "react-native";
+import { TransactionCard } from "./uiComponents/TransactionCard";
+import {
+  StyleSheet,
+  useColorScheme,
+  Text,
+  View,
+  ScrollView,
+  Platform,
+  StatusBar,
+  Dimensions,
+} from "react-native";
+import { RootTabScreenProps, RootStackScreenProps } from "../types";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { TransactionList } from "./uiComponents/TransactionList";
-import { AccountBalanceCard } from "./uiComponents/AccountBalanceCard";
-import { useWindowDimensions } from "react-native";
-import { ScrollView } from "react-native-gesture-handler";
-import { LineGraph } from "./uiComponents/LineGraph";
-import { PieChartGraph } from "./uiComponents/PieChartGraph";
-
 const DUMMY_TRANSACTIONS = [
   { id: 1, name: "expense1", amount: 10, type: "debit" },
   { id: 2, name: "expense2", amount: 30, type: "debit" },
@@ -45,40 +48,29 @@ const DUMMY_TRANSACTIONS = [
   { id: 30, name: "expense5", amount: 30, type: "credit" },
 ];
 
-export default function TabOneScreen({ navigation }: RootTabScreenProps<any>) {
+export function ScheduleTransactionsScreen({
+  navigation,
+}: RootTabScreenProps<any>) {
   const colorScheme = useColorScheme();
+  const backgroundColor = colorScheme === "dark" ? "black" : "white";
   const textColor = colorScheme === "dark" ? "white" : "black";
-  const windowWidth = useWindowDimensions().width;
-  const windowHeight = useWindowDimensions().height;
-
-  const colorText = colorScheme === "dark" ? "white" : "black";
+  const cardBackground = colorScheme === "dark" ? "rgb(24, 24, 24)" : "white";
   const cardBorderColor =
     colorScheme === "dark" ? "rgb(40, 40, 40)" : "rgb(220, 220, 220)";
-  const cardBackground = colorScheme === "dark" ? "rgb(24, 24, 24)" : "white";
-  const backGround = colorScheme === "dark" ? "black" : "white";
 
+  const [text, onChangeText] = React.useState("sdf");
+  const screenHeight = Dimensions.get("window").height;
+  // console.log(navigation);
   return (
-    <ScrollView style={{ backgroundColor: backGround }}>
-      <Text
-        style={{
-          color: textColor,
-          fontSize: 40,
-          fontWeight: "bold",
-          marginBottom: 15,
-          marginLeft: 17,
-        }}
-      >
-        Charts
-      </Text>
-      <View style={styles.container}>
-        <LineGraph></LineGraph>
-        <View
-          style={{ borderColor: cardBorderColor, ...styles.pieChartContainer }}
-        >
-          <PieChartGraph></PieChartGraph>
-        </View>
+    <SafeAreaView style={{ ...styles.container }}>
+      <View style={{ backgroundColor: backgroundColor }}>
+        <TransactionList
+          navigation={navigation}
+          header={"Scheduled"}
+          route={undefined}
+        ></TransactionList>
       </View>
-    </ScrollView>
+    </SafeAreaView>
   );
 }
 
@@ -86,24 +78,14 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingTop: StatusBar.currentHeight,
-    marginHorizontal: 1,
+    marginHorizontal: 16,
+  },
+  rowBack: {
     alignItems: "center",
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: "bold",
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: "80%",
-  },
-  pieChartContainer: {
-    justifyContent: "center",
-    alignItems: "center",
-    borderRadius: 10,
-    borderTopWidth: 1,
-    borderBottomWidth: 1,
-    marginHorizontal: 15,
+    backgroundColor: "red",
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    paddingLeft: 15,
   },
 });

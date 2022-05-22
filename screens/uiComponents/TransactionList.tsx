@@ -1,16 +1,25 @@
-import { StatusBar, StyleSheet, useColorScheme } from "react-native";
-
-import EditScreenInfo from "../components/EditScreenInfo";
-import { Text, View } from "../components/Themed";
-import { RootTabScreenProps } from "../types";
-import { TransactionDescription } from "../interface";
-import React from "react";
-import { TransactionList } from "./uiComponents/TransactionList";
-import { AccountBalanceCard } from "./uiComponents/AccountBalanceCard";
-import { useWindowDimensions } from "react-native";
-import { ScrollView } from "react-native-gesture-handler";
-import { LineGraph } from "./uiComponents/LineGraph";
-import { PieChartGraph } from "./uiComponents/PieChartGraph";
+import { FontAwesome } from "@expo/vector-icons";
+import React, { useRef, useState } from "react";
+import {
+  FlatList,
+  Animated,
+  SafeAreaView,
+  TouchableHighlight,
+} from "react-native";
+import { TransactionCard } from "./TransactionCard";
+import {
+  StyleSheet,
+  useColorScheme,
+  Text,
+  View,
+  ScrollView,
+  Platform,
+  StatusBar,
+  Dimensions,
+} from "react-native";
+import { RootTabScreenProps, RootStackScreenProps } from "../../types";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import { TransactionDescription } from "../../interface";
 
 const DUMMY_TRANSACTIONS = [
   { id: 1, name: "expense1", amount: 10, type: "debit" },
@@ -45,40 +54,57 @@ const DUMMY_TRANSACTIONS = [
   { id: 30, name: "expense5", amount: 30, type: "credit" },
 ];
 
-export default function TabOneScreen({ navigation }: RootTabScreenProps<any>) {
+const myItemSeparator = () => {
+  return (
+    <View
+      style={{ height: 1, backgroundColor: "gray", marginHorizontal: 10 }}
+    />
+  );
+};
+
+export function TransactionList(props: {
+  navigation: RootTabScreenProps<any>;
+  header: string;
+  data: any[];
+}) {
   const colorScheme = useColorScheme();
   const textColor = colorScheme === "dark" ? "white" : "black";
-  const windowWidth = useWindowDimensions().width;
-  const windowHeight = useWindowDimensions().height;
-
-  const colorText = colorScheme === "dark" ? "white" : "black";
+  const cardBackground = colorScheme === "dark" ? "rgb(24, 24, 24)" : "white";
   const cardBorderColor =
     colorScheme === "dark" ? "rgb(40, 40, 40)" : "rgb(220, 220, 220)";
-  const cardBackground = colorScheme === "dark" ? "rgb(24, 24, 24)" : "white";
-  const backGround = colorScheme === "dark" ? "black" : "white";
-
   return (
-    <ScrollView style={{ backgroundColor: backGround }}>
-      <Text
-        style={{
-          color: textColor,
-          fontSize: 40,
-          fontWeight: "bold",
-          marginBottom: 15,
-          marginLeft: 17,
-        }}
-      >
-        Charts
-      </Text>
-      <View style={styles.container}>
-        <LineGraph></LineGraph>
-        <View
-          style={{ borderColor: cardBorderColor, ...styles.pieChartContainer }}
-        >
-          <PieChartGraph></PieChartGraph>
-        </View>
-      </View>
-    </ScrollView>
+    <FlatList
+      data={props.data}
+      renderItem={({ item }) => (
+        <TransactionCard
+          date={new Date("01-01-2020")}
+          category={"1"}
+          name={item.name}
+          type={item.type}
+          paymentAmount={item.paymentAmount}
+          currency={"USD"}
+          id={item.id}
+          navigation={props.navigation}
+          navigationScreen={"AddTransaction"}
+        ></TransactionCard>
+      )}
+      ListHeaderComponent={() =>
+        props.header === "" ? (
+          <React.Fragment></React.Fragment>
+        ) : (
+          <Text
+            style={{
+              color: textColor,
+              fontSize: 40,
+              fontWeight: "bold",
+            }}
+          >
+            {props.header}
+          </Text>
+        )
+      }
+      ItemSeparatorComponent={myItemSeparator}
+    ></FlatList>
   );
 }
 
@@ -87,23 +113,5 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: StatusBar.currentHeight,
     marginHorizontal: 1,
-    alignItems: "center",
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: "bold",
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: "80%",
-  },
-  pieChartContainer: {
-    justifyContent: "center",
-    alignItems: "center",
-    borderRadius: 10,
-    borderTopWidth: 1,
-    borderBottomWidth: 1,
-    marginHorizontal: 15,
   },
 });
