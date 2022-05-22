@@ -17,6 +17,7 @@ import { TransactionDescription } from "../../interface";
 import { useContext } from "react";
 import { TransactionContext } from "../../store/TransactionContextProvider";
 import { InputFieldsList } from "./InputFieldsList";
+import "react-native-get-random-values";
 import { v4 as uuid } from "uuid";
 
 const options = [
@@ -43,7 +44,7 @@ export function TransactionModal(navigation: RootTabScreenProps<any>) {
   const borderWidth = 1;
   const borderRadius = 9;
 
-  console.log(navigation.route.params!.transactionType);
+  // console.log(navigation.route.params!);
 
   const cardBackground = colorScheme === "dark" ? "rgb(24, 24, 24)" : "white";
   const cardBorderColor =
@@ -79,7 +80,9 @@ export function TransactionModal(navigation: RootTabScreenProps<any>) {
       : navigation.route.params!.additionalNote
   );
 
-  // console.log();
+  // const id = ;
+
+  // console.log("-->", navigation.route.params);
   const [paymentMethod, setPaymentMethod] = useState(
     navigation.route.params!.paymentMethod === undefined
       ? ""
@@ -201,19 +204,27 @@ export function TransactionModal(navigation: RootTabScreenProps<any>) {
                 additionalNote: additionalNote,
                 currency: currency,
                 repeatedTransaction: false,
-                id: uuid(),
+                id:
+                  navigation.route.params!.transactionType === "editTransaction"
+                    ? navigation.route.params!.id
+                    : uuid(),
               };
-              transactionContext.addTransaction(addtransaction);
+
+              if (
+                navigation.route.params!.transactionType === "editTransaction"
+              ) {
+                console.log("eddting transaction");
+                transactionContext.editTransaction(addtransaction);
+              } else {
+                transactionContext.addTransaction(addtransaction);
+              }
               navigation.navigation.goBack();
             }}
             color={"green"}
           ></HeaderButton>
         </View>
 
-        <InputFieldsList
-          fieldList={inputFieldList}
-          onSubmitHandler={onSubmitHandler}
-        ></InputFieldsList>
+        <InputFieldsList fieldList={inputFieldList}></InputFieldsList>
         <View style={styles.dateContainer}>
           <TextInput
             value={day}

@@ -81,10 +81,12 @@ export const reducer = (
     }
 
     case actions.EDIT_TRANSACTION: {
+      // console.log("here");
       const objIndex = state.userTransactions.findIndex(
         (transaction) => transaction.id === actionGiven.transaction!.id
       );
-
+      console.log(objIndex);
+      // console.log(actionGiven.transaction);
       const edittedTransaction: TransactionDescription = {
         date: actionGiven.transaction!.date,
         category: actionGiven.transaction!.category,
@@ -100,7 +102,23 @@ export const reducer = (
 
       state.userTransactions[objIndex] = edittedTransaction;
 
-      return { userTransactions: state.userTransactions };
+      // const newArr = state.userTransactions.map((element) => {
+      //   if (element.id === actionGiven.transaction!.id) {
+      //     return { ...element, ...actionGiven.transaction };
+      //   }
+
+      //   return element;
+      // });
+
+      // console.log(state.userTransactions);
+      // let arr = state.userTransactions.forEach((item, i) => {
+      //   item.id === actionGiven.transaction?.id
+      //     ? { ...actionGiven.transaction }
+      //     : item;
+      // });
+      return {
+        userTransactions: state.userTransactions,
+      };
     }
     default:
       return state;

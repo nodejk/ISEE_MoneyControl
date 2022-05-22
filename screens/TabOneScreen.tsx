@@ -46,8 +46,6 @@ export default function TabOneScreen({ navigation }: RootTabScreenProps<any>) {
   const colorScheme = useColorScheme();
   const textColor = colorScheme === "dark" ? "white" : "black";
 
-  const transactionContext = useContext(TransactionContext);
-
   return (
     <View style={styles.container}>
       <Text
@@ -62,11 +60,7 @@ export default function TabOneScreen({ navigation }: RootTabScreenProps<any>) {
         My expenses
       </Text>
       <AccountBalanceCard amount={-10} currency={"EURO"}></AccountBalanceCard>
-      <TransactionList
-        navigation={navigation}
-        header={""}
-        data={transactionContext.userTransactions}
-      ></TransactionList>
+      <TransactionList navigation={navigation} header={""}></TransactionList>
     </View>
   );
 }

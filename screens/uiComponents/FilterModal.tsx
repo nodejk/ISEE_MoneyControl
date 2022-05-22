@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import SwitchSelector from "react-native-switch-selector";
+// import SwitchSelector from "react-native-switch-selector";
 
 import {
   ScrollView,
@@ -13,8 +13,8 @@ import {
 import { Text, View } from "../../components/Themed";
 import { RootTabScreenProps } from "../../types";
 import useColorScheme from "../../hooks/useColorScheme";
-import RNDateTimePicker from "@react-native-community/datetimepicker";
-import DateTimePicker from "react-native-modal-datetime-picker";
+// import RNDateTimePicker from "@react-native-community/datetimepicker";
+// import DateTimePicker from "react-native-modal-datetime-picker";
 import { HeaderButton } from "./HeaderButtons";
 
 const options = [

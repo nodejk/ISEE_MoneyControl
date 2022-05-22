@@ -11,7 +11,7 @@ export interface TransactionDescription {
   additionalNote?: string;
   currency: "EURO" | "USD" | "GBP" | "YEN";
   repeatedTransaction: boolean;
-  id: string;
+  id: any;
 }
 
 export interface UserDescriptionInterface {

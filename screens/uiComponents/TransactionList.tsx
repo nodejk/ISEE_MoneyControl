@@ -1,5 +1,5 @@
 import { FontAwesome } from "@expo/vector-icons";
-import React, { useRef, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import {
   FlatList,
   Animated,
@@ -20,6 +20,7 @@ import {
 import { RootTabScreenProps, RootStackScreenProps } from "../../types";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { TransactionDescription } from "../../interface";
+import { TransactionContext } from "../../store/TransactionContextProvider";
 
 const DUMMY_TRANSACTIONS = [
   { id: 1, name: "expense1", amount: 10, type: "debit" },
@@ -65,24 +66,26 @@ const myItemSeparator = () => {
 export function TransactionList(props: {
   navigation: RootTabScreenProps<any>;
   header: string;
-  data: any[];
 }) {
   const colorScheme = useColorScheme();
   const textColor = colorScheme === "dark" ? "white" : "black";
   const cardBackground = colorScheme === "dark" ? "rgb(24, 24, 24)" : "white";
   const cardBorderColor =
     colorScheme === "dark" ? "rgb(40, 40, 40)" : "rgb(220, 220, 220)";
+  const transactionContext = useContext(TransactionContext);
+  console.log("transaction list-->", transactionContext.userTransactions[0]);
+
   return (
     <FlatList
-      data={props.data}
+      data={transactionContext.userTransactions}
       renderItem={({ item }) => (
         <TransactionCard
-          date={new Date("01-01-2020")}
-          category={"1"}
+          date={item.date}
+          category={item.category}
           name={item.name}
           type={item.type}
           paymentAmount={item.paymentAmount}
-          currency={"USD"}
+          currency={item.currency}
           id={item.id}
           navigation={props.navigation}
           navigationScreen={"AddTransaction"}

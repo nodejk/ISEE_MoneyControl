@@ -13,7 +13,6 @@ interface propsInterface {
     inputDescription?: string;
     onChangeHandler: (text: string) => void;
   }[];
-  onSubmitHandler: (value: any) => any;
 }
 
 export const InputFieldsList = React.forwardRef<any, propsInterface>(
@@ -72,7 +71,7 @@ export const InputFieldsList = React.forwardRef<any, propsInterface>(
                 onChangeText={(txt) => {
                   setText(txt);
                 }}
-                onEndEditing={(event) => {
+                onEndEditing={() => {
                   props.onChangeHandler(text);
                 }}
               />
