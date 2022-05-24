@@ -6,7 +6,7 @@
 
 
 
-Tasks for the first sprint: 
+Goals for the first sprint: 
 1. Add Interactive UI components. 
 2. Integrated Modals.
 3. Interactive Graphical Interface.
@@ -57,27 +57,33 @@ There are two state managements that manages the overall state of the applicatio
 
 **Navigation:**
 
-**navigation/index.tsx: ** contains all navigation logic, whether a screen should be rendered as a Modal, Screen or Card. Additionally, it enables customization of header UI
+**navigation/index.tsx:** contains all navigation logic, whether a screen should be rendered as a Modal, Screen or Card. Additionally, it enables customization of header UI
                       components as well as functional components.
 
 ---
 
 **UI Screens:**
 
-**screens/TabOneScreen.tsx: ** contains the UI logic for rendering the transactional list and net credit and debit. It also has a modal to either edit or add a transaction. 
+**screens/TabOneScreen.tsx:** contains the UI logic for rendering the transactional list and net credit and debit. It also has a modal to either edit or add a transaction. 
                           If list transaction is clicked --> edit the transaction, else if Plus Item is clicked --> add a new transaction. While editting a transaction, 
                           additional props are passed to the modal to present the previous state of the transaction. After making an edit or adding a new transaction,
                           **editTransaction** or **addTransaction** methods are called in TransactionContextProvider. After updating the TransactionContextProvider state
                           it re-renders all the components and passes them the new state.
                           
-**screens/TabTwoScreen.tsx: ** contains the UI logic for rendering the graphical user interface. It contains two graphical interfaces: Line Chart and Pie Chart. Data is passed
+**screens/TabTwoScreen.tsx:** contains the UI logic for rendering the graphical user interface. It contains two graphical interfaces: Line Chart and Pie Chart. Data is passed
                           from a global state TransactionContextProvider as props in order to render the graphs. It contains a popup filter modal that calls either 
                           **filterTransactionByDate**, **filterTransactionByPaymentMethod** and **filterTransactionByCategory** depending on the filter chosen from 
                           TransactionContextProvicer.
 
-**screens/MyProfile.tsx: **    contains the UI logic for rendering and editing the user's first and last name and other controlling other UserContextProvider state like login and logout.
+**screens/MyProfile.tsx:**    contains the UI logic for rendering and editing the user's first and last name and other controlling other UserContextProvider state like login and logout.
 
 ---
+
+**Additional UI Features:**
+
+**CurrencyConverter.ts:** Converts the currency type to symbols. Example: "USD" -> "$"
+
+
 
 
 
