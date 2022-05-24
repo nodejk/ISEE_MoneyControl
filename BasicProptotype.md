@@ -1,12 +1,12 @@
 
 <img src="https://user-images.githubusercontent.com/94879785/169922011-e88eadd0-380f-4fce-b372-74296c2207f4.png" width="100"> 
 
-**MoneyIO Basic Prototype:**
+**✨MoneyIO - Basic Prototype✨**
 
 
 
 
-Goals for the first sprint: 
+Goals for the first sprint 🥅: 
 1. Add Interactive UI components. 
 2. Integrated Modals.
 3. Interactive Graphical Interface.
@@ -14,7 +14,7 @@ Goals for the first sprint:
 
 ---
 
-**State Management:**
+**State Management 🏢:**
 
 There are two state managements that manages the overall state of the application:
  
@@ -55,14 +55,14 @@ There are two state managements that manages the overall state of the applicatio
 ---
 **Task 1**
 
-**Navigation:**
+**Navigation 🗺:**
 
 **navigation/index.tsx:** contains all navigation logic, whether a screen should be rendered as a Modal, Screen or Card. Additionally, it enables customization of header UI
                       components as well as functional components.
 
 ---
 
-**UI Screens:**
+**UI Screens 💻:**
 
 **screens/TabOneScreen.tsx:** contains the UI logic for rendering the transactional list and net credit and debit. It also has a modal to either edit or add a transaction. 
                           If list transaction is clicked --> edit the transaction, else if Plus Item is clicked --> add a new transaction. While editting a transaction, 
@@ -77,13 +77,16 @@ There are two state managements that manages the overall state of the applicatio
 
 **screens/MyProfile.tsx:**    contains the UI logic for rendering and editing the user's first and last name and other controlling other UserContextProvider state like login and logout.
 
+**uiComponents/HeaderButton.tsx**: Header Button component that renders 2 buttons (❌ and ✅) on the header of modals. Used for confirming and action or go back to the previous screen.
+
 ---
 
-**Additional UI Features:**
+**Additional UI Features ➕:**
 
 **CurrencyConverter.ts:** Converts the currency type to symbols. Example: "USD" -> "$"
 
 
+Note: Other Objects' properties can be found in **interfaces.ts**.
 
 
 
