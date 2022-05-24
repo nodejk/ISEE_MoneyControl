@@ -53,9 +53,7 @@ There are two state managements that manages the overall state of the applicatio
                         2. thresholdBudget: number <br/>
                        
 ---
-**Task 1**
-
-**Navigation 🗺:**
+**UI Navigation 🗺:**
 
 **navigation/index.tsx:** contains all navigation logic, whether a screen should be rendered as a Modal, Screen or Card. Additionally, it enables customization of header UI
                       components as well as functional components.
@@ -85,8 +83,9 @@ There are two state managements that manages the overall state of the applicatio
 
 **CurrencyConverter.ts:** Converts the currency type to symbols. Example: "USD" -> "$"
 
+---
 
-Note: Other Objects' properties can be found in **interfaces.ts**.
+**Note:** Other Objects' properties can be found in **interfaces.ts**.
 
 
 
