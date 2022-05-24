@@ -2,4 +2,4 @@
 
 Blog Articles:
 
-1. [Basic Proptotype](https://www.google.com)
+1. [Basic Proptotype](https://github.com/nodejk/ISEE_MoneyControl/blob/main/BasicProptotype.md)
