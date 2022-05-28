@@ -75,6 +75,8 @@ There are two state managements that manages the overall state of the applicatio
 
 **CurrencyConverter.ts:** Converts the currency type to symbols. Example: "USD" -> "$"
 
+**Beautiful Material UI icons:** We use industrial standard UI icons which make the application more user friendly and pretty. Read more about Material UI here: https://materialdesignicons.com/
+
 **Note:** Other Objects' properties can be found in **interfaces.ts**.
 
 ---
