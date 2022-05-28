@@ -77,5 +77,16 @@ There are two state managements that manages the overall state of the applicatio
 
 **Note:** Other Objects' properties can be found in **interfaces.ts**.
 
+---
+
+## Mapping of Different Components 🔗:
+
+![image](https://user-images.githubusercontent.com/94879785/170838600-05673e14-de15-4795-bdfd-c66c7ce9f70c.png)
+
+---
+
+## Use Case Digram 👤:
+
+![image](https://user-images.githubusercontent.com/94879785/170838632-095a8d22-2aac-4118-b899-32e2c65b7714.png)
 
 
