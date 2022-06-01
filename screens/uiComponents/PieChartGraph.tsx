@@ -4,35 +4,21 @@ import { PieChart } from "react-native-chart-kit";
 
 const data = [
   {
-    name: "Seoul",
+    name: "Rent",
     population: 21500000,
     color: "rgba(131, 167, 234, 1)",
     legendFontColor: "#7F7F7F",
     legendFontSize: 15,
   },
   {
-    name: "Toronto",
-    population: 2800000,
-    color: "#F00",
-    legendFontColor: "#7F7F7F",
-    legendFontSize: 15,
-  },
-  {
-    name: "Beijing",
-    population: 527612,
-    color: "red",
-    legendFontColor: "#7F7F7F",
-    legendFontSize: 15,
-  },
-  {
-    name: "New York",
+    name: "Food",
     population: 8538000,
     color: "#ffffff",
     legendFontColor: "#7F7F7F",
     legendFontSize: 15,
   },
   {
-    name: "Moscow",
+    name: "Partying",
     population: 11920000,
     color: "rgb(0, 0, 255)",
     legendFontColor: "#7F7F7F",

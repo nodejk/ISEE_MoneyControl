@@ -1,7 +1,16 @@
 import React, { useEffect, useImperativeHandle, useState } from "react";
-import { TextInput, useColorScheme, View } from "react-native";
+import { Pressable, TextInput, useColorScheme, View } from "react-native";
 import { InputField } from "./InputField";
-import { ScrollView, StyleSheet, StatusBar } from "react-native";
+import {
+  ScrollView,
+  StyleSheet,
+  StatusBar,
+  TouchableOpacity,
+} from "react-native";
+import { v4 as uuid } from "uuid";
+import { PopupModal } from "./PopupModal";
+import { Text } from "../../components/Themed";
+import { Picker, onOpen, onClose } from "react-native-actions-sheet-picker";
 
 interface propsInterface {
   fieldList: {
@@ -11,7 +20,13 @@ interface propsInterface {
     requiredField: boolean;
     fieldName: string;
     inputDescription?: string;
-    onChangeHandler: (text: string) => void;
+    onChangeHandler: (text: any) => void;
+    selectionProps?: {
+      handleModalVisibility: () => void;
+      selectionOptions: string[];
+      modalVisiblity: boolean;
+      modalVisibilityHandler: () => void;
+    };
   }[];
 }
 
@@ -26,6 +41,7 @@ export const InputFieldsList = React.forwardRef<any, propsInterface>(
     const cardBorderColor =
       colorScheme === "dark" ? "rgb(40, 40, 40)" : "rgb(220, 220, 220)";
     const margins = { marginTop: 18 };
+    const textColor = colorScheme === "dark" ? "white" : "black";
 
     let outputVal = props.fieldList.reduce((acc, element) => {
       const { name, value } = element;
@@ -41,12 +57,25 @@ export const InputFieldsList = React.forwardRef<any, propsInterface>(
       fieldName: string;
       inputDescription?: string;
       onChangeHandler: (text: string) => void;
+      selectionProps: {
+        handleModalVisibility: () => void;
+        selectionOptions: string[];
+        modalVisiblity: boolean;
+        modalVisibilityHandler: () => void;
+      } | null;
     }) {
       // };
       const [text, setText] = useState(props.value);
+      const [visible, setVisible] = useState(false);
+
+      const openMenu = () => setVisible(true);
+
+      const closeMenu = () => setVisible(false);
+      // console.log(props.selectionProps?.handleModalVisibility);
+      // console.log(props.name);
       return (
         <View>
-          {props.inputDescription === undefined ? (
+          {props.selectionProps === null ? (
             <InputField
               name={props.fieldName}
               backgroundColor={cardBackground}
@@ -62,7 +91,7 @@ export const InputFieldsList = React.forwardRef<any, propsInterface>(
               }
             >
               <TextInput
-                style={styles.inputField}
+                style={{ color: textColor, ...styles.inputField }}
                 placeholder={props.requiredField ? "Required" : "Optional"}
                 value={text}
                 keyboardType={
@@ -76,33 +105,94 @@ export const InputFieldsList = React.forwardRef<any, propsInterface>(
                 }}
               />
             </InputField>
-          ) : null}
+          ) : (
+            <View style={{ alignItems: "center" }}>
+              <InputField
+                name={props.fieldName}
+                backgroundColor={cardBackground}
+                borderColor={cardBorderColor}
+                borderTopWidth={borderWidth}
+                borderBottomWidth={
+                  props.positionType === "bottom" ? borderWidth : 0
+                }
+                borderHorizontalWidth={borderWidth}
+                borderTopRadius={
+                  props.positionType === "top" ? borderRadius : 0
+                }
+                borderBottomRadius={
+                  props.positionType === "bottom" ? borderRadius : 0
+                }
+                pressable={() => {
+                  onOpen(props.fieldName);
+                }}
+              >
+                <Text style={{ color: textColor, ...styles.inputField }}>
+                  {props.value}
+                </Text>
+              </InputField>
+              <Picker
+                id={props.fieldName}
+                data={props.selectionProps.selectionOptions}
+                searchable={false}
+                label={`Select ${props.fieldName}`}
+                setSelected={() => {}}
+                renderListItem={function (item: string, index: number) {
+                  return (
+                    <Pressable
+                      onPress={() => {
+                        props.onChangeHandler(item);
+                        onClose(props.fieldName);
+                      }}
+                    >
+                      <Text style={{ color: "black" }}>{item}</Text>
+                    </Pressable>
+                  );
+                }}
+              />
+            </View>
+
+            // <Pressable onPress={props.selectionProps!.modalVisibilityHandler}>
+            //   <Text>here</Text>
+            //   <PopupModal
+            //     modalVisibility={props.selectionProps!.modalVisiblity}
+            //     modalVisiblityHandler={
+            //       props.selectionProps.modalVisibilityHandler
+            //     }
+            //     title={"Select " + props.fieldName}
+            //     setValue={props.onChangeHandler}
+            //     selectedValue={props.value}
+            //   />
+            // </Pressable>
+          )}
         </View>
       );
     }
     return (
       <React.Fragment>
-        {props.fieldList.map((element, index) => {
-          return (
-            <FieldListItem
-              {...{
-                name: element.name,
-                value: element.value,
-                valueType: element.valueType,
-                positionType:
-                  index === 0
-                    ? "top"
-                    : index === props.fieldList.length - 1
-                    ? "bottom"
-                    : "",
-                requiredField: element.requiredField,
-                fieldName: element.fieldName,
-                id: index + "asdf",
-                onChangeHandler: element.onChangeHandler,
-              }}
-            ></FieldListItem>
-          );
-        })}
+        {props.fieldList.map((element, index) => (
+          <FieldListItem
+            key={uuid()}
+            {...{
+              name: element.name,
+              value: element.value,
+              valueType: element.valueType,
+              positionType:
+                index === 0
+                  ? "top"
+                  : index === props.fieldList.length - 1
+                  ? "bottom"
+                  : "",
+              requiredField: element.requiredField,
+              fieldName: element.fieldName,
+              id: index + "asdf",
+              onChangeHandler: element.onChangeHandler,
+              selectionProps:
+                element.selectionProps === undefined
+                  ? null
+                  : element.selectionProps,
+            }}
+          ></FieldListItem>
+        ))}
 
         {/* <FieldListItem
           // key={1}

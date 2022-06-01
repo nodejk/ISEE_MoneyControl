@@ -23,6 +23,7 @@ export interface UserDescriptionInterface {
   onLogin: (credentials: userCredentials) => void;
   onLogout: () => void;
   loginStatus: boolean;
+  userDefinedCategory: string[];
 }
 
 export interface userCredentials {
@@ -45,7 +46,7 @@ export interface ProfileNaivgationProps {
   navigation?: NavigationProp<any, any>;
   navigationScreen?: string;
   fontSize?: number;
-  currency: "EURO" | "USD" | "GBP" | "YEN";
+  currency: "EURO" | "USD" | "GBP" | "JPY";
 }
 
 export interface ProfileSettingInputFieldProps {
@@ -74,6 +75,7 @@ export interface InputFieldProps {
   children?: React.ReactNode;
   paddingRight?: number;
   placeholder?: string;
+  pressable?: () => any;
 }
 
 export interface HeaderButtonProps {
@@ -115,6 +117,7 @@ export interface ActionInterface {
   dateTo?: Date;
   category?: string;
   paymentMethod?: string;
+  id?: string;
 }
 
 export interface TransactionState {

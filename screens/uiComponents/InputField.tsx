@@ -1,5 +1,11 @@
 import React from "react";
-import { Platform, StyleSheet, TextInput, useColorScheme } from "react-native";
+import {
+  Platform,
+  StyleSheet,
+  TextInput,
+  TouchableOpacity,
+  useColorScheme,
+} from "react-native";
 import { Text, View } from "../../components/Themed";
 import { InputFieldProps } from "../../interface";
 
@@ -38,27 +44,39 @@ export function InputField(props: InputFieldProps) {
         ...styles.container,
       }}
     >
-      <Text
+      <TouchableOpacity
+        disabled={props.pressable === undefined ? true : false}
         style={{
-          paddingRight: props.paddingRight,
-          color: textColor,
-          ...styles.name,
+          justifyContent: "space-between",
+          display: "flex",
+          flex: 1,
+          flexDirection: "row",
+          alignItems: "center",
         }}
+        onPress={props.pressable}
       >
-        {props.name}
-      </Text>
-      {props.children === undefined ? (
-        <TextInput
-          style={styles.inputField}
-          placeholder={props.placeholder}
-          value={""}
-          keyboardType={"default"}
-          keyboardAppearance={colorScheme}
-          textAlign="right"
-        />
-      ) : (
-        props.children
-      )}
+        <Text
+          style={{
+            paddingRight: props.paddingRight,
+            color: textColor,
+            ...styles.name,
+          }}
+        >
+          {props.name}
+        </Text>
+        {props.children === undefined ? (
+          <TextInput
+            style={styles.inputField}
+            placeholder={props.placeholder}
+            value={""}
+            keyboardType={"default"}
+            keyboardAppearance={colorScheme}
+            textAlign="right"
+          />
+        ) : (
+          props.children
+        )}
+      </TouchableOpacity>
     </View>
   );
 }

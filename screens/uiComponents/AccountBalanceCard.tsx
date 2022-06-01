@@ -14,10 +14,12 @@ export function AccountBalanceCard(props: {
 }) {
   const colorScheme = useColorScheme();
 
-  const colorText = colorScheme === "dark" ? "white" : "black";
+  // const colorText = colorScheme === "dark" ? "white" : "black";
   const sign = props.amount < 0 ? "-" : props.amount === 0 ? "" : "+";
   const cardBorderColor =
     colorScheme === "dark" ? "rgb(40, 40, 40)" : "rgb(220, 220, 220)";
+
+  const colorText = props.amount >= 0 ? "rgb(0,255,127)" : "rgb(255,69,0)";
   const cardBackground = colorScheme === "dark" ? "rgb(24, 24, 24)" : "white";
 
   return (

@@ -8,6 +8,7 @@ import React, { useContext } from "react";
 import { TransactionList } from "./uiComponents/TransactionList";
 import { AccountBalanceCard } from "./uiComponents/AccountBalanceCard";
 import { TransactionContext } from "../store/TransactionContextProvider";
+import { UserContext } from "../store/UserContextProvider";
 
 const DUMMY_TRANSACTIONS = [
   { id: 1, name: "expense1", amount: 10, type: "debit" },
@@ -45,6 +46,16 @@ const DUMMY_TRANSACTIONS = [
 export default function TabOneScreen({ navigation }: RootTabScreenProps<any>) {
   const colorScheme = useColorScheme();
   const textColor = colorScheme === "dark" ? "white" : "black";
+  // const userCtx = useContext(UserContext);
+  const transactionContext = useContext(TransactionContext);
+  const amount = transactionContext.userTransactions.reduce(
+    (element, object) => {
+      return (
+        element + (object.type === "credit" ? 1 : -1) * object.paymentAmount
+      );
+    },
+    0
+  );
 
   return (
     <View style={styles.container}>
@@ -59,7 +70,10 @@ export default function TabOneScreen({ navigation }: RootTabScreenProps<any>) {
       >
         My expenses
       </Text>
-      <AccountBalanceCard amount={-10} currency={"EURO"}></AccountBalanceCard>
+      <AccountBalanceCard
+        amount={amount}
+        currency={"EURO"}
+      ></AccountBalanceCard>
       <TransactionList navigation={navigation} header={""}></TransactionList>
     </View>
   );

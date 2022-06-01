@@ -38,8 +38,9 @@ export const reducer = (
         ],
       };
     case actions.REMOVE_TRANSACTION: {
+      console.log(actionGiven.id);
       const filteredTransactions = state.userTransactions.filter(
-        (transaction) => transaction.id !== actionGiven.transaction!.id
+        (transaction) => transaction.id !== actionGiven!.id
       );
       return { userTransactions: filteredTransactions };
     }

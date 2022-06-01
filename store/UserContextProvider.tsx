@@ -10,6 +10,7 @@ export const UserContext = React.createContext<UserDescriptionInterface>({
   onLogin: (credentials: userCredentials) => {},
   onLogout: () => {},
   loginStatus: false,
+  userDefinedCategory: ["Rent", "Groceries", "Alcohol"],
 });
 
 export const UserContextProvider: React.FC<{}> = (props) => {
@@ -22,6 +23,7 @@ export const UserContextProvider: React.FC<{}> = (props) => {
     onLogin: (credentials: userCredentials) => {},
     onLogout: () => {},
     loginStatus: false,
+    userDefinedCategory: ["Rent", "Groceries", "Alcohol"],
   };
   return (
     <UserContext.Provider value={defualtUserState}>

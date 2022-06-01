@@ -9,6 +9,7 @@ import { FontAwesome } from "@expo/vector-icons";
 import { NavigationProp, ParamListBase } from "@react-navigation/native";
 import Colors from "../../constants/Colors";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import { v4 as uuid } from "uuid";
 
 export default function UserProfileLayout({
   navigation,
@@ -38,7 +39,7 @@ export default function UserProfileLayout({
               ...styles.userProfileNameOverviewText,
             }}
           >
-            Krishna Kant Sharma
+            FirstName LastName
           </Text>
         </View>
         <View style={styles.userProfileOverview}>
@@ -55,6 +56,7 @@ export default function UserProfileLayout({
         </View>
 
         <UserProfileNavigationCard
+          currency={"EURO"}
           {...{
             key: "Edit Profile",
             cardName: "Edit Profile",
@@ -69,12 +71,13 @@ export default function UserProfileLayout({
                 name={"circle-edit-outline"}
                 color={Colors["light"].tint}
                 size={iconSize}
+                key={uuid()}
               />,
               <FontAwesome
                 name="chevron-right"
                 size={16}
                 color={buttonColor}
-                key={"editProfile2"}
+                key={uuid()}
               />,
             ],
 
@@ -83,6 +86,7 @@ export default function UserProfileLayout({
           }}
         />
         <UserProfileNavigationCard
+          currency={"EURO"}
           {...{
             cardName: "Sync Account",
             key: "Sync",
@@ -94,17 +98,19 @@ export default function UserProfileLayout({
                 name={"cloud-sync"}
                 color={Colors["light"].tint}
                 size={iconSize}
+                key={uuid()}
               />,
               <FontAwesome
                 name="chevron-right"
                 size={16}
                 color={buttonColor}
-                key={"cloud-download2"}
+                key={uuid()}
               />,
             ],
           }}
         />
         <UserProfileNavigationCard
+          currency={"EURO"}
           {...{
             cardName: "Scheduled",
             key: "Scheduled Transactions",
@@ -117,12 +123,13 @@ export default function UserProfileLayout({
                 name={"calendar-multiselect"}
                 color={Colors["light"].tint}
                 size={iconSize}
+                key={uuid()}
               />,
               <FontAwesome
                 name="chevron-right"
                 size={16}
                 color={buttonColor}
-                key={"calendar2"}
+                key={uuid()}
               />,
             ],
             navigation: navigation,
@@ -130,6 +137,7 @@ export default function UserProfileLayout({
           }}
         />
         <UserProfileNavigationCard
+          currency={"EURO"}
           {...{
             key: "Settings",
             cardName: "Settings",
@@ -141,12 +149,13 @@ export default function UserProfileLayout({
                 name={"cog-outline"}
                 color={Colors["light"].tint}
                 size={iconSize}
+                key={uuid()}
               />,
               <FontAwesome
                 name="chevron-right"
                 size={16}
                 color={buttonColor}
-                key={"gears2"}
+                key={uuid()}
               />,
             ],
             navigation: navigation,
@@ -154,6 +163,7 @@ export default function UserProfileLayout({
           }}
         />
         <UserProfileNavigationCard
+          currency={"EURO"}
           {...{
             cardName: "Help",
             key: "Help",
@@ -165,12 +175,13 @@ export default function UserProfileLayout({
                 name={"help-circle-outline"}
                 color={Colors["light"].tint}
                 size={iconSize}
+                key={uuid()}
               />,
               <FontAwesome
                 name="chevron-right"
                 size={16}
                 color={buttonColor}
-                key={"cloud-download2"}
+                key={uuid()}
               />,
             ],
             navigation: navigation,

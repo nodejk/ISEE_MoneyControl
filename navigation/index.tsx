@@ -115,23 +115,23 @@ function RootNavigator() {
             title: "",
             headerShadowVisible: false,
             headerStyle: { backgroundColor: headerColor },
-            headerRight: () => (
-              <HeaderButton
-                name={"check"}
-                size={iconSize}
-                {...margins}
-                color={"green"}
-              ></HeaderButton>
-            ),
-            headerLeft: () => (
-              <HeaderButton
-                name={"close"}
-                size={iconSize}
-                {...margins}
-                onPress={() => navigation.goBack()}
-                color={"red"}
-              ></HeaderButton>
-            ),
+            // headerRight: () => (
+            //   <HeaderButton
+            //     name={"check"}
+            //     size={iconSize}
+            //     {...margins}
+            //     color={"red"}
+            //   ></HeaderButton>
+            // ),
+            // headerLeft: () => (
+            //   <HeaderButton
+            //     name={"close"}
+            //     size={iconSize}
+            //     {...margins}
+            //     onPress={() => navigation.goBack()}
+            //     color={"red"}
+            //   ></HeaderButton>
+            // ),
           })}
         />
         <Stack.Screen

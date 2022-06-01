@@ -5,7 +5,7 @@ import { actions, reducer } from "./action_reducers";
 interface UserTransactionInterface {
   userTransactions: TransactionDescription[];
   addTransaction: (transaction: TransactionDescription) => any | void;
-  removeTransaction: (transaction: TransactionDescription) => any | void;
+  removeTransaction: (id: string) => any | void;
   filterTransactionByDate: (dateFrom: Date, dateTo: Date) => any | void;
   filterTransactionByCategory: (category: string) => any | void;
   filterTransactionByPaymentMethod: (paymentMethod: string) => any | void;
@@ -13,15 +13,48 @@ interface UserTransactionInterface {
 }
 
 const initialUserTransactionState: UserTransactionInterface = {
-  userTransactions: [],
+  userTransactions: [
+    {
+      date: new Date(),
+      name: "Rent",
+      type: "debit",
+      paymentMethod: "online",
+      paymentAmount: 500,
+      currency: "EURO",
+      repeatedTransaction: false,
+      additionalNote: "Move to a New Place",
+      id: "123",
+    },
+    {
+      date: new Date(),
+      name: "Groceries",
+      type: "debit",
+      paymentAmount: "100",
+      paymentMethod: "online",
+      currency: "EURO",
+      repeatedTransaction: false,
+      id: "3432",
+    },
+    {
+      date: new Date(),
+      name: "Salary",
+      type: "credit",
+      paymentMethod: "online",
+      currency: "EURO",
+      paymentAmount: "3000",
+      repeatedTransaction: false,
+      additionalNote: "make more money",
+      id: "4543",
+    },
+  ] as TransactionDescription[],
   addTransaction: (transaction: TransactionDescription) => {
     null;
   },
-  removeTransaction: (transaction: TransactionDescription) => {},
+  removeTransaction: (id: string) => {},
   filterTransactionByDate: (dateFrom: Date, dateTo: Date) => {},
-  filterTransactionByCategory: function (category: string) {},
-  filterTransactionByPaymentMethod: function (paymentMethod: string) {},
-  editTransaction: function (transaction: TransactionDescription): void {},
+  filterTransactionByCategory: (category: string) => {},
+  filterTransactionByPaymentMethod: (paymentMethod: string) => {},
+  editTransaction: (transaction: TransactionDescription) => {},
 };
 
 export const TransactionContext = React.createContext<UserTransactionInterface>(
@@ -41,8 +74,8 @@ export const TransactionContextProvider: React.FC<{}> = (props) => {
       dispatch({ type: actions.ADD_TRANSACTION, transaction: transaction });
     },
 
-    removeTransaction: (transaction: TransactionDescription) => {
-      dispatch({ type: actions.REMOVE_TRANSACTION, transaction: transaction });
+    removeTransaction: (id: string) => {
+      dispatch({ type: actions.REMOVE_TRANSACTION, id: id });
     },
 
     filterTransactionByDate: (dateFrom: Date, dateTo: Date) => {

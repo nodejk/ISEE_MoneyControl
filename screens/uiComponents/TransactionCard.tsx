@@ -23,7 +23,6 @@ export function TransactionCard(props: navProps) {
 
   //   get it from user state
   const currency = props.currency;
-  console.log(props.category);
 
   return (
     <Pressable

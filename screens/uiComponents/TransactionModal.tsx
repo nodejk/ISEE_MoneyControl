@@ -19,6 +19,8 @@ import { TransactionContext } from "../../store/TransactionContextProvider";
 import { InputFieldsList } from "./InputFieldsList";
 import "react-native-get-random-values";
 import { v4 as uuid } from "uuid";
+import { Modal } from "react-native-paper";
+import { UserContext } from "../../store/UserContextProvider";
 
 const options = [
   { label: "-", value: "1" },
@@ -50,9 +52,16 @@ export function TransactionModal(navigation: RootTabScreenProps<any>) {
   const cardBorderColor =
     colorScheme === "dark" ? "rgb(40, 40, 40)" : "rgb(220, 220, 220)";
   const margins = { marginTop: 18 };
+  const textColor = colorScheme === "dark" ? "white" : "black";
 
   const transactionContext = useContext(TransactionContext);
+  const userContext = useContext(UserContext);
 
+  const [modalVisiblity, setModalVisiblity] = useState<Boolean>(false);
+
+  function handleModalVisibility() {
+    setModalVisiblity(!modalVisiblity);
+  }
   const transaction: TransactionDescription =
     navigation.route.params.transaction === undefined
       ? defaultTransaction
@@ -90,7 +99,7 @@ export function TransactionModal(navigation: RootTabScreenProps<any>) {
   );
   const [paymentAmount, setPaymentAmount] = useState(
     navigation.route.params!.paymentAmount === undefined
-      ? ""
+      ? 0
       : navigation.route.params!.paymentAmount
   );
   const [currency, setCurrency] = useState(
@@ -123,9 +132,12 @@ export function TransactionModal(navigation: RootTabScreenProps<any>) {
       fieldName: "Category",
       requiredField: true,
       onChangeHandler: setCategory,
+      selectionProps: {
+        selectionOptions: userContext.userDefinedCategory,
+      },
     },
     {
-      valueType: "text",
+      valueType: "number",
       value: paymentAmount,
       name: "paymentAmount",
       fieldName: "Payment Amount",
@@ -155,6 +167,9 @@ export function TransactionModal(navigation: RootTabScreenProps<any>) {
       fieldName: "Currency",
       requiredField: false,
       onChangeHandler: setCurrency,
+      selectionProps: {
+        selectionOptions: ["USD", "EURO", "GBP", "YEN"],
+      },
     },
     {
       valueType: "text",
@@ -163,6 +178,9 @@ export function TransactionModal(navigation: RootTabScreenProps<any>) {
       fieldName: "Type",
       requiredField: true,
       onChangeHandler: setType,
+      selectionProps: {
+        selectionOptions: ["debit", "credit"],
+      },
     },
   ];
 
@@ -184,14 +202,31 @@ export function TransactionModal(navigation: RootTabScreenProps<any>) {
         >
           <HeaderButton
             name={"close"}
-            size={40}
+            size={30}
             {...margins}
-            onPress={() => navigation.navigation.goBack()}
-            color={"red"}
+            onPress={() => {
+              navigation.navigation.goBack();
+            }}
+            color={"blue"}
           ></HeaderButton>
+          {navigation.route.params!.transactionType === "editTransaction" && (
+            <HeaderButton
+              color={"red"}
+              name={"trash-can-outline"}
+              {...margins}
+              size={30}
+              onPress={() => {
+                transactionContext.removeTransaction(
+                  navigation.route.params!.id
+                );
+                navigation.navigation.goBack();
+              }}
+            ></HeaderButton>
+          )}
+
           <HeaderButton
             name={"check"}
-            size={40}
+            size={30}
             {...margins}
             onPress={() => {
               const addtransaction: TransactionDescription = {
@@ -213,7 +248,6 @@ export function TransactionModal(navigation: RootTabScreenProps<any>) {
               if (
                 navigation.route.params!.transactionType === "editTransaction"
               ) {
-                console.log("eddting transaction");
                 transactionContext.editTransaction(addtransaction);
               } else {
                 transactionContext.addTransaction(addtransaction);
@@ -238,6 +272,7 @@ export function TransactionModal(navigation: RootTabScreenProps<any>) {
               width: "30%",
               padding: 10,
               textAlign: "center",
+              color: textColor,
             }}
           ></TextInput>
           <TextInput
@@ -252,6 +287,7 @@ export function TransactionModal(navigation: RootTabScreenProps<any>) {
               width: "30%",
               padding: 10,
               textAlign: "center",
+              color: textColor,
             }}
           ></TextInput>
           <TextInput
@@ -266,6 +302,7 @@ export function TransactionModal(navigation: RootTabScreenProps<any>) {
               width: "30%",
               padding: 10,
               textAlign: "center",
+              color: textColor,
             }}
           ></TextInput>
         </View>

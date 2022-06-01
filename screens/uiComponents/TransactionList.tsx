@@ -21,7 +21,7 @@ import { RootTabScreenProps, RootStackScreenProps } from "../../types";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { TransactionDescription } from "../../interface";
 import { TransactionContext } from "../../store/TransactionContextProvider";
-
+import { v4 as uuid } from "uuid";
 const DUMMY_TRANSACTIONS = [
   { id: 1, name: "expense1", amount: 10, type: "debit" },
   { id: 2, name: "expense2", amount: 30, type: "debit" },
@@ -73,11 +73,11 @@ export function TransactionList(props: {
   const cardBorderColor =
     colorScheme === "dark" ? "rgb(40, 40, 40)" : "rgb(220, 220, 220)";
   const transactionContext = useContext(TransactionContext);
-  console.log("transaction list-->", transactionContext.userTransactions[0]);
 
   return (
     <FlatList
       data={transactionContext.userTransactions}
+      key={uuid()}
       renderItem={({ item }) => (
         <TransactionCard
           date={item.date}
@@ -89,6 +89,7 @@ export function TransactionList(props: {
           id={item.id}
           navigation={props.navigation}
           navigationScreen={"AddTransaction"}
+          repeatedTransaction={item.repeatedTransaction}
         ></TransactionCard>
       )}
       ListHeaderComponent={() =>
