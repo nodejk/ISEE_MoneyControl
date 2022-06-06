@@ -1,6 +1,7 @@
 # Weekly Report
 
-##Week 01: Worked on building different user interface screens, along with different UI components such as buttons and integrated dark mode. 
+## Week 01: 
+Worked on building different user interface screens, along with different UI components such as buttons and integrated dark mode. 
 
 
 ## Week 02:
