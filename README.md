@@ -14,7 +14,7 @@
 2. For iPhone: Scan the QR with iPhone and it will be automatically redirect to Expo App.
 3. For Android: Open Expo app and scan the QR code within the app.
 
-Weekly Progress can be accessed here: [Weekly Reports](https://github.com/nodejk/ISEE_MoneyControl/blob/main/WeeklyReport.md)
+### Weekly Progress can be accessed here: [Weekly Reports](https://github.com/nodejk/ISEE_MoneyControl/blob/main/WeeklyReport.md)
 
 ## Blog Articles 📓:
 
