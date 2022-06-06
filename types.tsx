@@ -25,7 +25,8 @@ export type RootStackParamList = {
   AddTransaction: undefined;
   EditTransaction: undefined;
   Settings: undefined;
-  FilterModal: undefined;
+  FilterModalTabOne: undefined;
+  FilterModalTabTwo: undefined;
   params: any;
 };
 

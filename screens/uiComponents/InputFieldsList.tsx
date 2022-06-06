@@ -11,6 +11,7 @@ import { v4 as uuid } from "uuid";
 import { PopupModal } from "./PopupModal";
 import { Text } from "../../components/Themed";
 import { Picker, onOpen, onClose } from "react-native-actions-sheet-picker";
+import { Button } from "react-native";
 
 interface propsInterface {
   fieldList: {
@@ -26,6 +27,9 @@ interface propsInterface {
       selectionOptions: string[];
       modalVisiblity: boolean;
       modalVisibilityHandler: () => void;
+      selectionHandler: (ele: any) => void;
+      submitHandler: () => void;
+      selectedOptions: string[];
     };
   }[];
 }
@@ -62,6 +66,8 @@ export const InputFieldsList = React.forwardRef<any, propsInterface>(
         selectionOptions: string[];
         modalVisiblity: boolean;
         modalVisibilityHandler: () => void;
+        submitHandler: (submitItems: any) => void;
+        selectedOptions: string[];
       } | null;
     }) {
       // };
@@ -72,7 +78,22 @@ export const InputFieldsList = React.forwardRef<any, propsInterface>(
 
       const closeMenu = () => setVisible(false);
       // console.log(props.selectionProps?.handleModalVisibility);
-      // console.log(props.name);
+
+      let selectedOptions = props.selectionProps?.selectedOptions;
+
+      console.log(selectedOptions);
+
+      function setOptionList(item: string) {
+        console.log(selectedOptions);
+        if (!selectedOptions?.includes(item)) {
+          selectedOptions?.push(item);
+        } else {
+          selectedOptions = selectedOptions.filter((obj) => {
+            return obj !== item;
+          });
+        }
+      }
+
       return (
         <View>
           {props.selectionProps === null ? (
@@ -134,18 +155,99 @@ export const InputFieldsList = React.forwardRef<any, propsInterface>(
                 id={props.fieldName}
                 data={props.selectionProps.selectionOptions}
                 searchable={false}
-                label={`Select ${props.fieldName}`}
+                label={
+                  props.selectionProps.submitHandler === undefined
+                    ? `Select ${props.fieldName}`
+                    : ""
+                }
                 setSelected={() => {}}
                 renderListItem={function (item: string, index: number) {
                   return (
-                    <Pressable
-                      onPress={() => {
-                        props.onChangeHandler(item);
-                        onClose(props.fieldName);
-                      }}
-                    >
-                      <Text style={{ color: "black" }}>{item}</Text>
-                    </Pressable>
+                    <View>
+                      {props.selectionProps?.submitHandler === undefined && (
+                        <Pressable
+                          onPress={() => {
+                            props.onChangeHandler(item);
+                            onClose(props.fieldName);
+                          }}
+                        >
+                          <Text
+                            style={{
+                              color: "black",
+                              fontSize: 15,
+                              marginTop: 10,
+                              marginBottom: 5,
+                            }}
+                          >
+                            {item}
+                          </Text>
+                          <View
+                            style={{
+                              borderBottomColor: cardBorderColor,
+                              borderBottomWidth: 1,
+                            }}
+                          />
+                        </Pressable>
+                      )}
+                      {props.selectionProps?.submitHandler !== undefined && (
+                        <View>
+                          {index === 0 && props.selectionProps.selectedOptions && (
+                            <View style={{ marginTop: -10 }}>
+                              <Button
+                                title={"Confirm"}
+                                onPress={() => {
+                                  props.selectionProps?.submitHandler(
+                                    selectedOptions
+                                  );
+                                  onClose(props.fieldName);
+                                }}
+                              ></Button>
+                            </View>
+                          )}
+                          <View
+                            style={{
+                              display: "flex",
+                              marginLeft: 10,
+                              marginBottom: 10,
+                              marginTop: index === 0 ? 5 : 0,
+                            }}
+                          >
+                            <Pressable
+                              onPress={() => {
+                                if (
+                                  props.selectionProps?.selectedOptions !==
+                                  undefined
+                                ) {
+                                  setOptionList(item);
+                                }
+                              }}
+                            >
+                              <Text
+                                style={{
+                                  color: selectedOptions?.includes(item)
+                                    ? "red"
+                                    : "black",
+                                  fontSize: 15,
+                                  marginBottom: 10,
+                                }}
+                              >
+                                {item}
+                              </Text>
+                              {index !==
+                                props.selectionProps.selectionOptions.length -
+                                  1 && (
+                                <View
+                                  style={{
+                                    borderBottomColor: cardBorderColor,
+                                    borderBottomWidth: 1,
+                                  }}
+                                />
+                              )}
+                            </Pressable>
+                          </View>
+                        </View>
+                      )}
+                    </View>
                   );
                 }}
               />

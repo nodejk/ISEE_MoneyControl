@@ -1,5 +1,5 @@
 import { FontAwesome } from "@expo/vector-icons";
-import React, { useContext, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import {
   FlatList,
   Animated,
@@ -17,11 +17,18 @@ import {
   StatusBar,
   Dimensions,
 } from "react-native";
-import { RootTabScreenProps, RootStackScreenProps } from "../../types";
+import {
+  RootTabScreenProps,
+  RootStackScreenProps,
+  RootStackParamList,
+} from "../../types";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { TransactionDescription } from "../../interface";
 import { TransactionContext } from "../../store/TransactionContextProvider";
 import { v4 as uuid } from "uuid";
+
+import { FilterCategories } from "./FilterCategories";
+
 const DUMMY_TRANSACTIONS = [
   { id: 1, name: "expense1", amount: 10, type: "debit" },
   { id: 2, name: "expense2", amount: 30, type: "debit" },
@@ -63,10 +70,13 @@ const myItemSeparator = () => {
   );
 };
 
-export function TransactionList(props: {
+interface navProps extends TransactionDescription {
   navigation: RootTabScreenProps<any>;
-  header: string;
-}) {
+  navigation1: RootTabScreenProps<any>;
+  scheduledTransactions: boolean;
+  route: any;
+}
+export function TransactionList(navigation: navProps) {
   const colorScheme = useColorScheme();
   const textColor = colorScheme === "dark" ? "white" : "black";
   const cardBackground = colorScheme === "dark" ? "rgb(24, 24, 24)" : "white";
@@ -74,39 +84,66 @@ export function TransactionList(props: {
     colorScheme === "dark" ? "rgb(40, 40, 40)" : "rgb(220, 220, 220)";
   const transactionContext = useContext(TransactionContext);
 
+  function repeatedTransaction(transaction: TransactionDescription) {
+    if (navigation.scheduledTransactions === true) {
+      return transaction.repeatedTransaction;
+    } else {
+      return true;
+    }
+  }
+
+  let userTransactions =
+    transactionContext.userTransactions.filter(repeatedTransaction);
+
+  // console.log("here-->", navigation.navigation1.route.params?.filters);
+
+  if (navigation.navigation1.route.params !== undefined) {
+    const filters = navigation.navigation1.route.params?.filters;
+    // console.log(filters);
+
+    // userTransactions = FilterCategories(filters, userTransactions);
+    userTransactions = FilterCategories(filters, userTransactions);
+
+    // console.log("here-->", userTransactions);
+  }
+
+  useEffect(() => {}, [userTransactions]);
+
+  // console.log(userTransactions);
   return (
     <FlatList
-      data={transactionContext.userTransactions}
+      data={userTransactions}
       key={uuid()}
       renderItem={({ item }) => (
         <TransactionCard
           date={item.date}
+          key={item.id}
           category={item.category}
           name={item.name}
           type={item.type}
           paymentAmount={item.paymentAmount}
           currency={item.currency}
           id={item.id}
-          navigation={props.navigation}
+          navigation={navigation.navigation1}
           navigationScreen={"AddTransaction"}
           repeatedTransaction={item.repeatedTransaction}
         ></TransactionCard>
       )}
-      ListHeaderComponent={() =>
-        props.header === "" ? (
-          <React.Fragment></React.Fragment>
-        ) : (
-          <Text
-            style={{
-              color: textColor,
-              fontSize: 40,
-              fontWeight: "bold",
-            }}
-          >
-            {props.header}
-          </Text>
-        )
-      }
+      // ListHeaderComponent={() =>
+      //   header === "" ? (
+      //     <React.Fragment></React.Fragment>
+      //   ) : (
+      //     <Text
+      //       style={{
+      //         color: textColor,
+      //         fontSize: 40,
+      //         fontWeight: "bold",
+      //       }}
+      //     >
+      //       {header}
+      //     </Text>
+      //   )
+      // }
       ItemSeparatorComponent={myItemSeparator}
     ></FlatList>
   );

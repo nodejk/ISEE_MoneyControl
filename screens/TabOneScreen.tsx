@@ -43,7 +43,7 @@ const DUMMY_TRANSACTIONS = [
   { id: 30, name: "expense5", amount: 30, type: "credit" },
 ];
 
-export default function TabOneScreen({ navigation }: RootTabScreenProps<any>) {
+export default function TabOneScreen(navigation: RootTabScreenProps<any>) {
   const colorScheme = useColorScheme();
   const textColor = colorScheme === "dark" ? "white" : "black";
   // const userCtx = useContext(UserContext);
@@ -74,7 +74,11 @@ export default function TabOneScreen({ navigation }: RootTabScreenProps<any>) {
         amount={amount}
         currency={"EURO"}
       ></AccountBalanceCard>
-      <TransactionList navigation={navigation} header={""}></TransactionList>
+      <TransactionList
+        navigation1={navigation}
+        header={""}
+        scheduledTransactions={false}
+      ></TransactionList>
     </View>
   );
 }

@@ -10,7 +10,8 @@ export const UserContext = React.createContext<UserDescriptionInterface>({
   onLogin: (credentials: userCredentials) => {},
   onLogout: () => {},
   loginStatus: false,
-  userDefinedCategory: ["Rent", "Groceries", "Alcohol"],
+  userDefinedCategory: ["Rent", "Groceries", "Salary", "Eat Out"],
+  userDefinedPaymentMethod: ["card", "cash"],
 });
 
 export const UserContextProvider: React.FC<{}> = (props) => {
@@ -23,8 +24,10 @@ export const UserContextProvider: React.FC<{}> = (props) => {
     onLogin: (credentials: userCredentials) => {},
     onLogout: () => {},
     loginStatus: false,
-    userDefinedCategory: ["Rent", "Groceries", "Alcohol"],
+    userDefinedCategory: ["Rent", "Groceries", "Salary", "Eat Out"],
+    userDefinedPaymentMethod: ["card", "cash"],
   };
+
   return (
     <UserContext.Provider value={defualtUserState}>
       {props.children}

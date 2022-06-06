@@ -6,18 +6,20 @@ interface UserTransactionInterface {
   userTransactions: TransactionDescription[];
   addTransaction: (transaction: TransactionDescription) => any | void;
   removeTransaction: (id: string) => any | void;
-  filterTransactionByDate: (dateFrom: Date, dateTo: Date) => any | void;
-  filterTransactionByCategory: (category: string) => any | void;
-  filterTransactionByPaymentMethod: (paymentMethod: string) => any | void;
   editTransaction: (transaction: TransactionDescription) => any | void;
 }
+
+import Moment from "moment";
+
+Moment.locale();
 
 const initialUserTransactionState: UserTransactionInterface = {
   userTransactions: [
     {
-      date: new Date(),
-      name: "Rent",
+      date: new Date("2022-05-10"),
+      name: "Rent 🏡",
       type: "debit",
+      category: "Rent",
       paymentMethod: "online",
       paymentAmount: 500,
       currency: "EURO",
@@ -26,34 +28,58 @@ const initialUserTransactionState: UserTransactionInterface = {
       id: "123",
     },
     {
-      date: new Date(),
-      name: "Groceries",
+      date: new Date("2022-06-03"),
+      name: "Groceries 🛒",
       type: "debit",
-      paymentAmount: "100",
+      category: "Groceries",
+      paymentAmount: 100,
       paymentMethod: "online",
       currency: "EURO",
       repeatedTransaction: false,
       id: "3432",
     },
     {
-      date: new Date(),
-      name: "Salary",
+      date: new Date("2022-06-01"),
+      name: "Salary 💵",
       type: "credit",
+      category: "Salary",
       paymentMethod: "online",
       currency: "EURO",
-      paymentAmount: "3000",
+      paymentAmount: 3000,
       repeatedTransaction: false,
       additionalNote: "make more money",
       id: "4543",
+    },
+    {
+      date: new Date("2022-03-01"),
+      name: "Beer",
+      type: "debit",
+      category: "Eat Out",
+      paymentMethod: "online",
+      currency: "EURO",
+      paymentAmount: 49,
+      repeatedTransaction: false,
+      additionalNote: "make more money",
+      id: "256644",
+    },
+
+    {
+      date: new Date("2022-05-16"),
+      name: "McDonalds 🍔",
+      type: "debit",
+      category: "Eat Out",
+      paymentMethod: "online",
+      currency: "EURO",
+      paymentAmount: 78,
+      repeatedTransaction: false,
+      additionalNote: "make more money",
+      id: "342665",
     },
   ] as TransactionDescription[],
   addTransaction: (transaction: TransactionDescription) => {
     null;
   },
   removeTransaction: (id: string) => {},
-  filterTransactionByDate: (dateFrom: Date, dateTo: Date) => {},
-  filterTransactionByCategory: (category: string) => {},
-  filterTransactionByPaymentMethod: (paymentMethod: string) => {},
   editTransaction: (transaction: TransactionDescription) => {},
 };
 
@@ -73,33 +99,9 @@ export const TransactionContextProvider: React.FC<{}> = (props) => {
     addTransaction: (transaction: TransactionDescription) => {
       dispatch({ type: actions.ADD_TRANSACTION, transaction: transaction });
     },
-
     removeTransaction: (id: string) => {
       dispatch({ type: actions.REMOVE_TRANSACTION, id: id });
     },
-
-    filterTransactionByDate: (dateFrom: Date, dateTo: Date) => {
-      dispatch({
-        type: actions.FILTER_TRANSACTIONS_BY_DATE,
-        dateFrom: dateFrom,
-        dateTo: dateTo,
-      });
-    },
-
-    filterTransactionByPaymentMethod: (paymentMethod: string) => {
-      dispatch({
-        type: actions.FILTER_TRANSACTIONS_BY_DATE,
-        paymentMethod: paymentMethod,
-      });
-    },
-
-    filterTransactionByCategory: (category: string) => {
-      dispatch({
-        type: actions.FILTER_TRANSACTIONS_BY_DATE,
-        category: category,
-      });
-    },
-
     editTransaction: (transaction: TransactionDescription) => {
       dispatch({
         type: actions.EDIT_TRANSACTION,

@@ -1,30 +1,40 @@
 import React from "react";
 import { useWindowDimensions } from "react-native";
 import { PieChart } from "react-native-chart-kit";
+import { TransactionDescription } from "../../interface";
 
-const data = [
-  {
-    name: "Rent",
-    population: 21500000,
-    color: "rgba(131, 167, 234, 1)",
-    legendFontColor: "#7F7F7F",
-    legendFontSize: 15,
-  },
-  {
-    name: "Food",
-    population: 8538000,
-    color: "#ffffff",
-    legendFontColor: "#7F7F7F",
-    legendFontSize: 15,
-  },
-  {
-    name: "Partying",
-    population: 11920000,
-    color: "rgb(0, 0, 255)",
-    legendFontColor: "#7F7F7F",
-    legendFontSize: 15,
-  },
-];
+function getRandomNumber(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+function groupBy(list: any[]) {
+  var result = [];
+
+  list.reduce(function (res, value) {
+    if (!res[value.category]) {
+      var color =
+        "rgb(" +
+        getRandomNumber(0, 255).toString() +
+        ", " +
+        getRandomNumber(0, 255).toString() +
+        ", " +
+        getRandomNumber(0, 255).toString() +
+        ")";
+      res[value.category] = {
+        name: value.category,
+        amount: 0,
+        color: color,
+        legendFontSize: 15,
+        legendFontColor: "#7F7F7F",
+      };
+      result.push(res[value.category]);
+    }
+    res[value.category].amount += parseFloat(value.paymentAmount);
+
+    return res;
+  }, {});
+
+  return result;
+}
 
 const chartConfig = {
   backgroundColor: "#ffffff",
@@ -33,17 +43,20 @@ const chartConfig = {
   color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
 };
 
-export function PieChartGraph(props: { data?: any[] }) {
+export function PieChartGraph(props: { data: TransactionDescription[] }) {
   const windowWidth = useWindowDimensions().width;
   const windowHeight = useWindowDimensions().height;
 
+  const data = groupBy(props.data);
+
+  // console.log(data);
   return (
     <PieChart
       data={data}
       width={windowWidth}
       height={220}
       chartConfig={chartConfig}
-      accessor={"population"}
+      accessor={"amount"}
       backgroundColor={"transparent"}
       paddingLeft={"15"}
       center={[0, 0]}

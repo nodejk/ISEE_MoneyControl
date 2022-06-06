@@ -24,10 +24,13 @@ export function TransactionCard(props: navProps) {
   //   get it from user state
   const currency = props.currency;
 
+  // console.log(props.navigation.navigation.navigate(props));
+  // console.log(props.navigationScreen);
+
   return (
     <Pressable
       onPress={() =>
-        props.navigation?.navigate(props.navigationScreen!, {
+        props.navigation.navigation?.navigate(props.navigationScreen!, {
           amount: props.paymentAmount,
           name: props.name,
           type: props.type,

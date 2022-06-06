@@ -4,13 +4,15 @@ import EditScreenInfo from "../components/EditScreenInfo";
 import { Text, View } from "../components/Themed";
 import { RootTabScreenProps } from "../types";
 import { TransactionDescription } from "../interface";
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import { TransactionList } from "./uiComponents/TransactionList";
 import { AccountBalanceCard } from "./uiComponents/AccountBalanceCard";
 import { useWindowDimensions } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { LineGraph } from "./uiComponents/LineGraph";
 import { PieChartGraph } from "./uiComponents/PieChartGraph";
+import { FilterCategories } from "./uiComponents/FilterCategories";
+import { TransactionContext } from "../store/TransactionContextProvider";
 
 const DUMMY_TRANSACTIONS = [
   { id: 1, name: "expense1", amount: 10, type: "debit" },
@@ -45,7 +47,14 @@ const DUMMY_TRANSACTIONS = [
   { id: 30, name: "expense5", amount: 30, type: "credit" },
 ];
 
-export default function TabOneScreen({ navigation }: RootTabScreenProps<any>) {
+interface navProps extends TransactionDescription {
+  navigation: RootTabScreenProps<any>;
+  navigation1: RootTabScreenProps<any>;
+  scheduledTransactions: boolean;
+  route: any;
+}
+
+export default function TabOneScreen(navigation: navProps) {
   const colorScheme = useColorScheme();
   const textColor = colorScheme === "dark" ? "white" : "black";
   const windowWidth = useWindowDimensions().width;
@@ -56,6 +65,41 @@ export default function TabOneScreen({ navigation }: RootTabScreenProps<any>) {
     colorScheme === "dark" ? "rgb(40, 40, 40)" : "rgb(220, 220, 220)";
   const cardBackground = colorScheme === "dark" ? "rgb(24, 24, 24)" : "white";
   const backGround = colorScheme === "dark" ? "black" : "white";
+
+  const transactionContext = useContext(TransactionContext);
+
+  function repeatedTransaction(transaction: TransactionDescription) {
+    if (navigation.scheduledTransactions === true) {
+      return transaction.repeatedTransaction;
+    } else {
+      return true;
+    }
+  }
+
+  function debitTransaction(transaction: TransactionDescription) {
+    if (transaction.type === "debit") {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  let userTransactions =
+    transactionContext.userTransactions.filter(repeatedTransaction);
+
+  let userTransactionsPie = userTransactions.filter(debitTransaction);
+
+  useEffect(() => {}, navigation.userTransactions);
+  // console.log("here-->", navigation.route?.params);
+
+  if (navigation.route?.params !== undefined) {
+    const filters = navigation.route?.params.filters;
+    console.log(filters);
+
+    userTransactions = FilterCategories(filters, userTransactions);
+  }
+
+  // console.log(userTransactions);
 
   return (
     <ScrollView style={{ backgroundColor: backGround }}>
@@ -71,11 +115,11 @@ export default function TabOneScreen({ navigation }: RootTabScreenProps<any>) {
         Charts
       </Text>
       <View style={styles.container}>
-        <LineGraph></LineGraph>
+        <LineGraph data={userTransactions}></LineGraph>
         <View
           style={{ borderColor: cardBorderColor, ...styles.pieChartContainer }}
         >
-          <PieChartGraph></PieChartGraph>
+          <PieChartGraph data={userTransactionsPie}></PieChartGraph>
         </View>
       </View>
     </ScrollView>

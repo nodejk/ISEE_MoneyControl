@@ -6,6 +6,8 @@ import {
   TextInput,
   StatusBar,
   KeyboardAvoidingView,
+  Button,
+  Alert,
 } from "react-native";
 
 import { Text, View } from "../../components/Themed";
@@ -19,7 +21,7 @@ import { TransactionContext } from "../../store/TransactionContextProvider";
 import { InputFieldsList } from "./InputFieldsList";
 import "react-native-get-random-values";
 import { v4 as uuid } from "uuid";
-import { Modal } from "react-native-paper";
+import { Modal } from "react-native";
 import { UserContext } from "../../store/UserContextProvider";
 
 const options = [
@@ -40,13 +42,18 @@ const defaultTransaction: TransactionDescription = {
   id: "",
 };
 
-export function TransactionModal(navigation: RootTabScreenProps<any>) {
+interface navProps extends TransactionDescription {
+  navigation: RootTabScreenProps<any>;
+  route: any;
+}
+
+export function TransactionModal(navigation: navProps) {
   const colorScheme = useColorScheme();
 
   const borderWidth = 1;
   const borderRadius = 9;
 
-  // console.log(navigation.route.params!);
+  // console.log(navigation);
 
   const cardBackground = colorScheme === "dark" ? "rgb(24, 24, 24)" : "white";
   const cardBorderColor =
@@ -57,64 +64,68 @@ export function TransactionModal(navigation: RootTabScreenProps<any>) {
   const transactionContext = useContext(TransactionContext);
   const userContext = useContext(UserContext);
 
-  const [modalVisiblity, setModalVisiblity] = useState<Boolean>(false);
+  const [modalVisible, setModalVisible] = useState(false);
 
-  function handleModalVisibility() {
-    setModalVisiblity(!modalVisiblity);
-  }
   const transaction: TransactionDescription =
-    navigation.route.params.transaction === undefined
+    navigation.route.params?.transaction === undefined
       ? defaultTransaction
       : navigation.route.params!.transaction;
 
   const [category, setCategory] = useState(
-    navigation.route.params!.category === undefined
+    navigation.route.params?.category === undefined
       ? ""
       : navigation.route.params!.category
   );
   const [name, setName] = useState(
-    navigation.route.params!.name === undefined
+    navigation.route.params?.name === undefined
       ? ""
       : navigation.route.params!.name
   );
   const [type, setType] = useState(
-    navigation.route.params!.type === undefined
+    navigation.route.params?.type === undefined
       ? "debit"
       : navigation.route.params!.type
   );
 
   const [additionalNote, setAdditionalNote] = useState(
-    navigation.route.params!.additionalNote === undefined
+    navigation.route.params?.additionalNote === undefined
       ? ""
       : navigation.route.params!.additionalNote
   );
 
   // const id = ;
 
-  // console.log("-->", navigation.route.params);
   const [paymentMethod, setPaymentMethod] = useState(
-    navigation.route.params!.paymentMethod === undefined
+    navigation.route.params?.paymentMethod === undefined
       ? ""
       : navigation.route.params!.paymentMethod
   );
   const [paymentAmount, setPaymentAmount] = useState(
-    navigation.route.params!.paymentAmount === undefined
+    navigation.route.params?.paymentAmount === undefined
       ? 0
       : navigation.route.params!.paymentAmount
   );
   const [currency, setCurrency] = useState(
-    navigation.route.params!.currency === undefined
+    navigation.route.params?.currency === undefined
       ? ""
       : navigation.route.params!.currency
   );
 
   const [day, setDay] = useState(
-    navigation.route.params!.date === undefined
+    navigation.route.params?.date === undefined
       ? transaction.date.getDate().toString()
       : navigation.route.params!.date.getDate().toString()
   );
-  const [month, setMonth] = useState(transaction.date.getMonth().toString());
-  const [year, setYear] = useState(transaction.date.getFullYear().toString());
+  const [month, setMonth] = useState(
+    navigation.route.params?.date === undefined
+      ? (transaction.date.getMonth() + 1).toString()
+      : (navigation.route.params!.date.getMonth() + 1).toString()
+  );
+  const [year, setYear] = useState(
+    navigation.route.params?.date === undefined
+      ? transaction.date.getFullYear().toString()
+      : navigation.route.params!.date.getFullYear().toString()
+  );
 
   const inputFieldList = [
     {
@@ -151,6 +162,9 @@ export function TransactionModal(navigation: RootTabScreenProps<any>) {
       fieldName: "Payment Method",
       requiredField: false,
       onChangeHandler: setPaymentMethod,
+      selectionProps: {
+        selectionOptions: userContext.userDefinedPaymentMethod,
+      },
     },
     {
       valueType: "text",
@@ -184,9 +198,26 @@ export function TransactionModal(navigation: RootTabScreenProps<any>) {
     },
   ];
 
-  const onSubmitHandler = (val: any) => {
-    console.log(val);
-  };
+  function modalVisibilityHandler() {
+    setModalVisible(!modalVisible);
+  }
+
+  function checkValidity(day: string, month: string, year: string) {
+    if (day === "" && month === "" && year === "") {
+      return true;
+    }
+    const dateString =
+      year.toString() +
+      "-" +
+      (month.toString().length === 1
+        ? "0" + month.toString()
+        : month.toString()) +
+      "-" +
+      (day.toString().length === 1 ? "0" + day.toString() : day.toString());
+    const date = Date.parse(dateString);
+
+    return !isNaN(date);
+  }
 
   return (
     <KeyboardAvoidingView style={{ ...styles.container }}>
@@ -229,30 +260,38 @@ export function TransactionModal(navigation: RootTabScreenProps<any>) {
             size={30}
             {...margins}
             onPress={() => {
-              const addtransaction: TransactionDescription = {
-                date: new Date(Number(year), Number(month), Number(day)),
-                category: category,
-                name: name,
-                type: type,
-                paymentAmount: paymentAmount,
-                paymentMethod: paymentMethod,
-                additionalNote: additionalNote,
-                currency: currency,
-                repeatedTransaction: false,
-                id:
-                  navigation.route.params!.transactionType === "editTransaction"
-                    ? navigation.route.params!.id
-                    : uuid(),
-              };
+              if (checkValidity(day, month, year)) {
+                const addtransaction: TransactionDescription = {
+                  date: new Date(Number(year), Number(month) - 1, Number(day)),
+                  category: category,
+                  name: name,
+                  type: type,
+                  paymentAmount: paymentAmount,
+                  paymentMethod: paymentMethod,
+                  additionalNote: additionalNote,
+                  currency: currency,
+                  repeatedTransaction:
+                    navigation.route.params?.scheduleTransaction === undefined
+                      ? false
+                      : true,
+                  id:
+                    navigation.route.params!.transactionType ===
+                    "editTransaction"
+                      ? navigation.route.params!.id
+                      : uuid(),
+                };
 
-              if (
-                navigation.route.params!.transactionType === "editTransaction"
-              ) {
-                transactionContext.editTransaction(addtransaction);
+                if (
+                  navigation.route.params!.transactionType === "editTransaction"
+                ) {
+                  transactionContext.editTransaction(addtransaction);
+                } else {
+                  transactionContext.addTransaction(addtransaction);
+                }
+                navigation.navigation.goBack();
               } else {
-                transactionContext.addTransaction(addtransaction);
+                modalVisibilityHandler();
               }
-              navigation.navigation.goBack();
             }}
             color={"green"}
           ></HeaderButton>
@@ -306,6 +345,30 @@ export function TransactionModal(navigation: RootTabScreenProps<any>) {
             }}
           ></TextInput>
         </View>
+
+        <View style={styles.modal}>
+          <Modal
+            animationType="slide"
+            transparent={true}
+            visible={modalVisible}
+            onRequestClose={() => {
+              Alert.alert("Modal has been closed.");
+              setModalVisible(!modalVisible);
+            }}
+          >
+            <View style={styles.modal}>
+              <View style={styles.modalView}>
+                <Text style={{ color: "red", marginBottom: 20, fontSize: 15 }}>
+                  Please add a valid date... 😣
+                </Text>
+                <Button
+                  onPress={modalVisibilityHandler}
+                  title={"Close"}
+                ></Button>
+              </View>
+            </View>
+          </Modal>
+        </View>
       </ScrollView>
     </KeyboardAvoidingView>
   );
@@ -335,6 +398,30 @@ const styles = StyleSheet.create({
     width: "80%",
     alignSelf: "center",
     marginTop: 10,
+  },
+
+  modal: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 22,
+    backgroundColor: "transparent",
+  },
+
+  modalView: {
+    margin: 20,
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding: 35,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
   },
 });
 

@@ -62,15 +62,16 @@ export function ScheduleTransactionsScreen({
   const screenHeight = Dimensions.get("window").height;
   // console.log(navigation);
   return (
-    <SafeAreaView style={{ ...styles.container }}>
+    <View style={{ ...styles.container }}>
       <View style={{ backgroundColor: backgroundColor }}>
-        <TransactionList
+        {/* <TransactionList
           navigation={navigation}
           header={"Scheduled"}
           route={undefined}
-        ></TransactionList>
+          scheduledTransactions={true}
+        ></TransactionList> */}
       </View>
-    </SafeAreaView>
+    </View>
   );
 }
 

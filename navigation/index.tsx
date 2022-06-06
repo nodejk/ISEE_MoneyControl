@@ -85,27 +85,51 @@ function RootNavigator() {
         }}
       >
         <Stack.Screen
-          name="FilterModal"
+          name="FilterModalTabOne"
           component={FilterModal}
           options={({ navigation }: any) => ({
             title: "",
-            headerRight: () => (
-              <HeaderButton
-                name={"check"}
-                size={iconSize}
-                {...margins}
-                color={"green"}
-              ></HeaderButton>
-            ),
-            headerLeft: () => (
-              <HeaderButton
-                name={"close"}
-                size={iconSize}
-                {...margins}
-                onPress={() => navigation.goBack()}
-                color={"red"}
-              ></HeaderButton>
-            ),
+            // headerRight: () => (
+            //   <HeaderButton
+            //     name={"check"}
+            //     size={iconSize}
+            //     {...margins}
+            //     color={"green"}
+            //   ></HeaderButton>
+            // ),
+            // headerLeft: () => (
+            //   <HeaderButton
+            //     name={"close"}
+            //     size={iconSize}
+            //     {...margins}
+            //     onPress={() => navigation.goBack()}
+            //     color={"red"}
+            //   ></HeaderButton>
+            // ),
+          })}
+        />
+        <Stack.Screen
+          name="FilterModalTabTwo"
+          component={FilterModal}
+          options={({ navigation }: any) => ({
+            title: "",
+            // headerRight: () => (
+            //   <HeaderButton
+            //     name={"check"}
+            //     size={iconSize}
+            //     {...margins}
+            //     color={"green"}
+            //   ></HeaderButton>
+            // ),
+            // headerLeft: () => (
+            //   <HeaderButton
+            //     name={"close"}
+            //     size={iconSize}
+            //     {...margins}
+            //     onPress={() => navigation.goBack()}
+            //     color={"red"}
+            //   ></HeaderButton>
+            // ),
           })}
         />
         <Stack.Screen
@@ -186,7 +210,17 @@ function RootNavigator() {
             headerShadowVisible: false,
             headerStyle: { backgroundColor: headerColor },
             headerRight: () => (
-              <Pressable onPress={() => navigation.navigate("AddTransaction")}>
+              <Pressable
+                onPress={() =>
+                  navigation.navigate({
+                    name: "AddTransaction",
+                    params: {
+                      transactionType: "addTransaction",
+                      scheduleTransaction: true,
+                    },
+                  })
+                }
+              >
                 <MaterialCommunityIcons
                   name="plus"
                   size={iconSize}
@@ -232,7 +266,12 @@ function BottomTabNavigator() {
           ),
           headerLeft: () => (
             <Pressable
-              onPress={() => navigation.navigate("FilterModal")}
+              onPress={() =>
+                navigation.navigate({
+                  name: "FilterModalTabOne",
+                  params: { navigateTo: "TabOne" },
+                })
+              }
               style={({ pressed }) => ({
                 opacity: pressed ? 0.5 : 1,
               })}
@@ -272,7 +311,7 @@ function BottomTabNavigator() {
       <BottomTab.Screen
         name="TabTwo"
         component={TabTwoScreen}
-        options={({ navigation }: RootTabScreenProps<"TabTwo">) => ({
+        options={({ navigation }) => ({
           title: "",
           headerShadowVisible: false,
           headerStyle: { backgroundColor: headerColor },
@@ -281,7 +320,12 @@ function BottomTabNavigator() {
           ),
           headerLeft: () => (
             <Pressable
-              onPress={() => navigation.navigate("FilterModal")}
+              onPress={() =>
+                navigation.navigate({
+                  name: "FilterModalTabTwo",
+                  params: { navigateTo: "TabTwo" },
+                })
+              }
               style={({ pressed }) => ({
                 opacity: pressed ? 0.5 : 1,
               })}

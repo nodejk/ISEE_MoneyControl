@@ -24,6 +24,7 @@ export interface UserDescriptionInterface {
   onLogout: () => void;
   loginStatus: boolean;
   userDefinedCategory: string[];
+  userDefinedPaymentMethod: string[];
 }
 
 export interface userCredentials {

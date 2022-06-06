@@ -45,6 +45,7 @@
     "@types/uuid": "^8.3.4",
     "jest": "^26.6.3",
     "jest-expo": "~45.0.0",
+    "moment": "^2.29.3",
     "react-native-actions-sheet": "^0.6.1",
     "react-native-actions-sheet-picker": "^0.3.0",
     "react-native-chart-kit": "^6.12.0",
