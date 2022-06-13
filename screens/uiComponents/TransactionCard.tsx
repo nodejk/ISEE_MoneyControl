@@ -18,14 +18,17 @@ export function TransactionCard(props: navProps) {
   const cardBackground = colorScheme === "dark" ? "rgb(24, 24, 24)" : "white";
 
   const transactionTypeColor =
-    props.type === "credit" ? "rgb(0,255,127)" : "rgb(255,69,0)";
-  const sign = props.type === "credit" ? "+" : "-";
+    props.type.type === "credit" ? "rgb(0,255,127)" : "rgb(255,69,0)";
+  const sign = props.type.type === "credit" ? "+" : "-";
 
   //   get it from user state
-  const currency = props.currency;
+  const currency = props.currency.name;
+
+  // console.log(props.type);
 
   // console.log(props.navigation.navigation.navigate(props));
   // console.log(props.navigationScreen);
+  console.log(props.currency);
 
   return (
     <Pressable
@@ -50,7 +53,7 @@ export function TransactionCard(props: navProps) {
         <Text style={{ color: textColor, ...styles.name }}>{props.name}</Text>
         <Text style={{ color: transactionTypeColor, ...styles.price }}>
           {sign}
-          {getCurrencySymbol(currency)}
+          {props.currency.label}
           {props.paymentAmount}
         </Text>
       </View>

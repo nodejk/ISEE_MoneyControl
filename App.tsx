@@ -7,6 +7,7 @@ import useCachedResources from "./hooks/useCachedResources";
 import useColorScheme from "./hooks/useColorScheme";
 import Navigation from "./navigation";
 import { TransactionContextProvider } from "./store/TransactionContextProvider";
+import { UserContextProvider } from "./store/UserContextProvider";
 
 export default function App() {
   const isLoadingComplete = useCachedResources();
@@ -18,10 +19,12 @@ export default function App() {
   } else {
     return (
       <SafeAreaProvider>
-        <TransactionContextProvider>
-          <Navigation colorScheme={colorScheme} />
-          <StatusBar />
-        </TransactionContextProvider>
+        <UserContextProvider>
+          <TransactionContextProvider>
+            <Navigation colorScheme={colorScheme} />
+            <StatusBar />
+          </TransactionContextProvider>
+        </UserContextProvider>
       </SafeAreaProvider>
     );
   }

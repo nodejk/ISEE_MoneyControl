@@ -75,6 +75,7 @@ interface navProps extends TransactionDescription {
   navigation1: RootTabScreenProps<any>;
   scheduledTransactions: boolean;
   route: any;
+  header?: string;
 }
 export function TransactionList(navigation: navProps) {
   const colorScheme = useColorScheme();
@@ -129,21 +130,21 @@ export function TransactionList(navigation: navProps) {
           repeatedTransaction={item.repeatedTransaction}
         ></TransactionCard>
       )}
-      // ListHeaderComponent={() =>
-      //   header === "" ? (
-      //     <React.Fragment></React.Fragment>
-      //   ) : (
-      //     <Text
-      //       style={{
-      //         color: textColor,
-      //         fontSize: 40,
-      //         fontWeight: "bold",
-      //       }}
-      //     >
-      //       {header}
-      //     </Text>
-      //   )
-      // }
+      ListHeaderComponent={() =>
+        navigation.header === "" ? (
+          <React.Fragment></React.Fragment>
+        ) : (
+          <Text
+            style={{
+              color: textColor,
+              fontSize: 40,
+              fontWeight: "bold",
+            }}
+          >
+            {navigation.header}
+          </Text>
+        )
+      }
       ItemSeparatorComponent={myItemSeparator}
     ></FlatList>
   );

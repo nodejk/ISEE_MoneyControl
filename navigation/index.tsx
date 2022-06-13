@@ -29,13 +29,14 @@ import { ScheduleTransactionsScreen } from "../screens/ScheduleTransactionScreen
 import { SettingsScreen } from "../screens/uiComponents/SettingsScreen";
 import { FilterModal } from "../screens/uiComponents/FilterModal";
 import { StyleSheet } from "react-native";
+import { EditTransactionPropertiesModal } from "../screens/uiComponents/EditTransactionPropertiesModal";
 import {
   RootStackParamList,
   RootTabParamList,
   RootTabScreenProps,
 } from "../types";
 import LinkingConfiguration from "./LinkingConfiguration";
-
+import { SyncAccount } from "../screens/uiComponents/SyncAccount";
 export default function Navigation({
   colorScheme,
 }: {
@@ -89,23 +90,6 @@ function RootNavigator() {
           component={FilterModal}
           options={({ navigation }: any) => ({
             title: "",
-            // headerRight: () => (
-            //   <HeaderButton
-            //     name={"check"}
-            //     size={iconSize}
-            //     {...margins}
-            //     color={"green"}
-            //   ></HeaderButton>
-            // ),
-            // headerLeft: () => (
-            //   <HeaderButton
-            //     name={"close"}
-            //     size={iconSize}
-            //     {...margins}
-            //     onPress={() => navigation.goBack()}
-            //     color={"red"}
-            //   ></HeaderButton>
-            // ),
           })}
         />
         <Stack.Screen
@@ -113,23 +97,6 @@ function RootNavigator() {
           component={FilterModal}
           options={({ navigation }: any) => ({
             title: "",
-            // headerRight: () => (
-            //   <HeaderButton
-            //     name={"check"}
-            //     size={iconSize}
-            //     {...margins}
-            //     color={"green"}
-            //   ></HeaderButton>
-            // ),
-            // headerLeft: () => (
-            //   <HeaderButton
-            //     name={"close"}
-            //     size={iconSize}
-            //     {...margins}
-            //     onPress={() => navigation.goBack()}
-            //     color={"red"}
-            //   ></HeaderButton>
-            // ),
           })}
         />
         <Stack.Screen
@@ -167,6 +134,15 @@ function RootNavigator() {
             headerStyle: { backgroundColor: headerColor },
           })}
         />
+        <Stack.Screen
+          name="EditTransactionPropertiesModal"
+          component={EditTransactionPropertiesModal}
+          options={({ navigation }: any) => ({
+            title: "",
+            headerShadowVisible: false,
+            headerStyle: { backgroundColor: headerColor },
+          })}
+        />
       </Stack.Group>
 
       <Stack.Group
@@ -178,6 +154,15 @@ function RootNavigator() {
         <Stack.Screen
           name="Help"
           component={HelpScreen}
+          options={{
+            title: "",
+            headerShadowVisible: false,
+            headerStyle: { backgroundColor: headerColor },
+          }}
+        />
+        <Stack.Screen
+          name="SyncAccount"
+          component={SyncAccount}
           options={{
             title: "",
             headerShadowVisible: false,

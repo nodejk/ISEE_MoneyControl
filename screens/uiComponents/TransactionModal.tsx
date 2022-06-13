@@ -31,13 +31,13 @@ const options = [
 
 const defaultTransaction: TransactionDescription = {
   date: new Date(),
-  category: "",
+  category: { id: "1", name: "Rent" },
   name: "",
-  type: "credit",
+  type: { id: "2", name: "Credit 🤑", type: "credit" },
   paymentAmount: 0,
-  paymentMethod: "",
+  paymentMethod: { id: "1", name: "card" },
   additionalNote: "",
-  currency: "EURO",
+  currency: { id: "2", name: "EURO", conversionRateToEuro: 1, label: "€" },
   repeatedTransaction: false,
   id: "",
 };
@@ -73,7 +73,7 @@ export function TransactionModal(navigation: navProps) {
 
   const [category, setCategory] = useState(
     navigation.route.params?.category === undefined
-      ? ""
+      ? transaction.category
       : navigation.route.params!.category
   );
   const [name, setName] = useState(
@@ -83,7 +83,7 @@ export function TransactionModal(navigation: navProps) {
   );
   const [type, setType] = useState(
     navigation.route.params?.type === undefined
-      ? "debit"
+      ? { id: "2", name: "Credit 🤑", type: "credit" }
       : navigation.route.params!.type
   );
 
@@ -94,10 +94,11 @@ export function TransactionModal(navigation: navProps) {
   );
 
   // const id = ;
+  console.log(navigation.route.params);
 
   const [paymentMethod, setPaymentMethod] = useState(
     navigation.route.params?.paymentMethod === undefined
-      ? ""
+      ? transaction.paymentMethod
       : navigation.route.params!.paymentMethod
   );
   const [paymentAmount, setPaymentAmount] = useState(
@@ -107,7 +108,7 @@ export function TransactionModal(navigation: navProps) {
   );
   const [currency, setCurrency] = useState(
     navigation.route.params?.currency === undefined
-      ? ""
+      ? transaction.currency
       : navigation.route.params!.currency
   );
 
@@ -182,7 +183,7 @@ export function TransactionModal(navigation: navProps) {
       requiredField: false,
       onChangeHandler: setCurrency,
       selectionProps: {
-        selectionOptions: ["USD", "EURO", "GBP", "YEN"],
+        selectionOptions: userContext.userDefinedCurrencies,
       },
     },
     {
@@ -193,7 +194,7 @@ export function TransactionModal(navigation: navProps) {
       requiredField: true,
       onChangeHandler: setType,
       selectionProps: {
-        selectionOptions: ["debit", "credit"],
+        selectionOptions: userContext.userDefinedTransactionType,
       },
     },
   ];

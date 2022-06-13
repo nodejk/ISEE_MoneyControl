@@ -24,7 +24,7 @@ interface propsInterface {
     onChangeHandler: (text: any) => void;
     selectionProps?: {
       handleModalVisibility: () => void;
-      selectionOptions: string[];
+      selectionOptions: any[];
       modalVisiblity: boolean;
       modalVisibilityHandler: () => void;
       selectionHandler: (ele: any) => void;
@@ -63,7 +63,7 @@ export const InputFieldsList = React.forwardRef<any, propsInterface>(
       onChangeHandler: (text: string) => void;
       selectionProps: {
         handleModalVisibility: () => void;
-        selectionOptions: string[];
+        selectionOptions: any[];
         modalVisiblity: boolean;
         modalVisibilityHandler: () => void;
         submitHandler: (submitItems: any) => void;
@@ -79,11 +79,12 @@ export const InputFieldsList = React.forwardRef<any, propsInterface>(
       const closeMenu = () => setVisible(false);
       // console.log(props.selectionProps?.handleModalVisibility);
 
+      console.log("fieldname-->", props.fieldName, "text-->", text);
       let selectedOptions = props.selectionProps?.selectedOptions;
 
       console.log(selectedOptions);
 
-      function setOptionList(item: string) {
+      function setOptionList(item: any) {
         console.log(selectedOptions);
         if (!selectedOptions?.includes(item)) {
           selectedOptions?.push(item);
@@ -114,7 +115,8 @@ export const InputFieldsList = React.forwardRef<any, propsInterface>(
               <TextInput
                 style={{ color: textColor, ...styles.inputField }}
                 placeholder={props.requiredField ? "Required" : "Optional"}
-                value={text}
+                // placeholder={text.toString()}
+                value={text.toString()}
                 keyboardType={
                   props.valueType === "number" ? "number-pad" : "default"
                 }
@@ -148,7 +150,7 @@ export const InputFieldsList = React.forwardRef<any, propsInterface>(
                 }}
               >
                 <Text style={{ color: textColor, ...styles.inputField }}>
-                  {props.value}
+                  {props.value.name}
                 </Text>
               </InputField>
               <Picker
@@ -161,7 +163,7 @@ export const InputFieldsList = React.forwardRef<any, propsInterface>(
                     : ""
                 }
                 setSelected={() => {}}
-                renderListItem={function (item: string, index: number) {
+                renderListItem={function (item: any, index: number) {
                   return (
                     <View>
                       {props.selectionProps?.submitHandler === undefined && (
@@ -179,7 +181,7 @@ export const InputFieldsList = React.forwardRef<any, propsInterface>(
                               marginBottom: 5,
                             }}
                           >
-                            {item}
+                            {item.name}
                           </Text>
                           <View
                             style={{
@@ -231,7 +233,7 @@ export const InputFieldsList = React.forwardRef<any, propsInterface>(
                                   marginBottom: 10,
                                 }}
                               >
-                                {item}
+                                {item.name}
                               </Text>
                               {index !==
                                 props.selectionProps.selectionOptions.length -

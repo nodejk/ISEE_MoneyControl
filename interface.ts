@@ -3,13 +3,13 @@ import { NavigationProp } from "@react-navigation/native";
 
 export interface TransactionDescription {
   date: Date;
-  category?: string;
+  category: category;
   name: string;
-  type: "credit" | "debit";
+  type: userTransactionType;
   paymentAmount: number;
-  paymentMethod?: string;
+  paymentMethod?: paymentMethod;
   additionalNote?: string;
-  currency: "EURO" | "USD" | "GBP" | "YEN";
+  currency: currency;
   repeatedTransaction: boolean;
   id: any;
 }
@@ -23,8 +23,23 @@ export interface UserDescriptionInterface {
   onLogin: (credentials: userCredentials) => void;
   onLogout: () => void;
   loginStatus: boolean;
-  userDefinedCategory: string[];
-  userDefinedPaymentMethod: string[];
+  userDefinedCategory: category[];
+  editUserDefinedCategories: (action: string, category: category) => void;
+  editUserDefinedPaymentMethod: (
+    action: string,
+    paymentMethod: paymentMethod
+  ) => void;
+  userId: string;
+  editUserDefinedCurrencies: (action: string, currency: currency) => void;
+  userDefinedPaymentMethod: paymentMethod[];
+  userDefinedCurrencies: currency[];
+  userDefinedTransactionType: userTransactionType[];
+  budgetCategories: ThresholdExpenseCategory[];
+  handleBudgetCategories: (
+    action: string,
+    categoryId: string,
+    threshold?: string
+  ) => void;
 }
 
 export interface userCredentials {
@@ -32,9 +47,32 @@ export interface userCredentials {
   password: string;
 }
 
+export interface userTransactionType {
+  id: string;
+  name: string;
+  type: "debit" | "credit";
+}
+
 export interface ThresholdExpenseCategory {
-  category: string;
+  categoryId: string;
   thresholdBudget: number;
+}
+
+export interface category {
+  id: string;
+  name: string;
+}
+
+export interface currency {
+  id: string;
+  name: string;
+  conversionRateToEuro: number;
+  label: string;
+}
+
+export interface paymentMethod {
+  id: string;
+  name: string;
 }
 
 export interface ProfileNaivgationProps {
@@ -44,10 +82,13 @@ export interface ProfileNaivgationProps {
   topBorder?: number;
   bottomBorder?: number;
   children?: React.ReactNode[];
-  navigation?: NavigationProp<any, any>;
+  navigation?: any;
   navigationScreen?: string;
   fontSize?: number;
-  currency: "EURO" | "USD" | "GBP" | "JPY";
+  topBorderRadius?: number;
+  bottomBorderRadius?: number;
+  routeParams?: any;
+  currency?: currency;
 }
 
 export interface ProfileSettingInputFieldProps {

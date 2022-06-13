@@ -57,10 +57,10 @@ function transactionCompiler(transactions: TransactionDescription[]) {
       // );
       lastAmount += transactionsPresent.reduce((acc, value) => {
         // console.log(value.type);
-        if (value.type == "credit") {
-          acc += value.paymentAmount;
+        if (value.type.type == "credit") {
+          acc += value.paymentAmount * value.currency.conversionRateToEuro;
         } else {
-          acc -= value.paymentAmount;
+          acc -= value.paymentAmount * value.currency.conversionRateToEuro;
         }
 
         return acc;

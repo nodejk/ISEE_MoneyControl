@@ -1,5 +1,5 @@
 import React, { useReducer } from "react";
-import { TransactionDescription } from "../interface";
+import { currency, TransactionDescription } from "../interface";
 import { actions, reducer } from "./action_reducers";
 
 interface UserTransactionInterface {
@@ -18,11 +18,11 @@ const initialUserTransactionState: UserTransactionInterface = {
     {
       date: new Date("2022-05-10"),
       name: "Rent 🏡",
-      type: "debit",
-      category: "Rent",
-      paymentMethod: "online",
+      type: { id: "1", name: "Debit 😢", type: "debit" },
+      category: { id: "1", name: "Rent" },
+      paymentMethod: { id: "1", name: "card" },
       paymentAmount: 500,
-      currency: "EURO",
+      currency: { id: "2", name: "EURO", conversionRateToEuro: 1, label: "€" },
       repeatedTransaction: false,
       additionalNote: "Move to a New Place",
       id: "123",
@@ -30,21 +30,21 @@ const initialUserTransactionState: UserTransactionInterface = {
     {
       date: new Date("2022-06-03"),
       name: "Groceries 🛒",
-      type: "debit",
-      category: "Groceries",
+      type: { id: "1", name: "Debit 😢", type: "debit" },
+      category: { id: "2", name: "Groceries" },
       paymentAmount: 100,
-      paymentMethod: "online",
-      currency: "EURO",
+      paymentMethod: { id: "1", name: "card" },
+      currency: { id: "1", name: "EURO", conversionRateToEuro: 1, label: "€" },
       repeatedTransaction: false,
       id: "3432",
     },
     {
       date: new Date("2022-06-01"),
       name: "Salary 💵",
-      type: "credit",
-      category: "Salary",
-      paymentMethod: "online",
-      currency: "EURO",
+      type: { id: "2", name: "Credit 🤑", type: "credit" },
+      category: { id: "3", name: "Salary" },
+      paymentMethod: { id: "1", name: "card" },
+      currency: { id: "2", name: "EURO", conversionRateToEuro: 1, label: "€" },
       paymentAmount: 3000,
       repeatedTransaction: false,
       additionalNote: "make more money",
@@ -53,10 +53,10 @@ const initialUserTransactionState: UserTransactionInterface = {
     {
       date: new Date("2022-03-01"),
       name: "Beer",
-      type: "debit",
-      category: "Eat Out",
-      paymentMethod: "online",
-      currency: "EURO",
+      type: { id: "1", name: "Debit 😢", type: "debit" },
+      category: { id: "4", name: "Eat Out" },
+      paymentMethod: { id: "1", name: "card" },
+      currency: { id: "2", name: "EURO", conversionRateToEuro: 1, label: "€" },
       paymentAmount: 49,
       repeatedTransaction: false,
       additionalNote: "make more money",
@@ -66,16 +66,16 @@ const initialUserTransactionState: UserTransactionInterface = {
     {
       date: new Date("2022-05-16"),
       name: "McDonalds 🍔",
-      type: "debit",
-      category: "Eat Out",
-      paymentMethod: "online",
-      currency: "EURO",
+      type: { id: "1", name: "Debit 😢", type: "debit" },
+      category: { id: "4", name: "Eat Out" },
+      paymentMethod: { id: "1", name: "card" },
+      currency: { id: "2", name: "EURO", conversionRateToEuro: 1, label: "€" },
       paymentAmount: 78,
       repeatedTransaction: false,
       additionalNote: "make more money",
       id: "342665",
     },
-  ] as TransactionDescription[],
+  ] as unknown as TransactionDescription[],
   addTransaction: (transaction: TransactionDescription) => {
     null;
   },

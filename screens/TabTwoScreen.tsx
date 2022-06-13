@@ -77,7 +77,7 @@ export default function TabOneScreen(navigation: navProps) {
   }
 
   function debitTransaction(transaction: TransactionDescription) {
-    if (transaction.type === "debit") {
+    if (transaction.type.type === "debit") {
       return true;
     } else {
       return false;
@@ -89,7 +89,7 @@ export default function TabOneScreen(navigation: navProps) {
 
   let userTransactionsPie = userTransactions.filter(debitTransaction);
 
-  useEffect(() => {}, navigation.userTransactions);
+  // useEffect(() => {}, navigation.userTransactions);
   // console.log("here-->", navigation.route?.params);
 
   if (navigation.route?.params !== undefined) {

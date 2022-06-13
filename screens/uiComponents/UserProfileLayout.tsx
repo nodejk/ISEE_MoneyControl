@@ -11,9 +11,7 @@ import Colors from "../../constants/Colors";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { v4 as uuid } from "uuid";
 
-export default function UserProfileLayout({
-  navigation,
-}: RootTabScreenProps<any>) {
+export default function UserProfileLayout(navigation: RootTabScreenProps<any>) {
   const colorScheme = useColorScheme();
   const buttonColor =
     colorScheme === "dark" ? "rgb(80, 80, 80)" : "rgb(200, 200, 200)";
@@ -107,6 +105,8 @@ export default function UserProfileLayout({
                 key={uuid()}
               />,
             ],
+            navigation: navigation,
+            navigationScreen: "SyncAccount",
           }}
         />
         <UserProfileNavigationCard

@@ -11,13 +11,17 @@ export function UserProfileNavigationCard(props: ProfileNaivgationProps) {
   const cardBorderColor =
     colorScheme === "dark" ? "rgb(40, 40, 40)" : "rgb(220, 220, 220)";
 
+  console.log(props);
   return (
     <React.Fragment>
       <Card
         style={{
           borderTopWidth: props.topBorder,
           borderBottomWidth: props.bottomBorder,
-          borderRadius: 0,
+          borderTopLeftRadius: props.topBorderRadius,
+          borderTopRightRadius: props.topBorderRadius,
+          borderBottomLeftRadius: props.bottomBorderRadius,
+          borderBottomRightRadius: props.bottomBorderRadius,
           borderColor: cardBorderColor,
           backgroundColor: cardBackground,
           marginTop: props.topGap,
@@ -28,7 +32,10 @@ export function UserProfileNavigationCard(props: ProfileNaivgationProps) {
         onPress={() => {
           props.navigation === undefined
             ? ""
-            : props.navigation?.navigate(props.navigationScreen!);
+            : props.navigation?.navigation.navigate({
+                name: props.navigationScreen,
+                params: props.routeParams,
+              });
         }}
       >
         <Card.Content>

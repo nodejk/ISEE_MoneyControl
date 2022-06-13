@@ -10,7 +10,8 @@ function groupBy(list: any[]) {
   var result = [];
 
   list.reduce(function (res, value) {
-    if (!res[value.category]) {
+    // console.log(value.category.name);
+    if (!res[value.category.name]) {
       var color =
         "rgb(" +
         getRandomNumber(0, 255).toString() +
@@ -19,16 +20,18 @@ function groupBy(list: any[]) {
         ", " +
         getRandomNumber(0, 255).toString() +
         ")";
-      res[value.category] = {
-        name: value.category,
+      res[value.category.name] = {
+        name: value.category.name,
         amount: 0,
         color: color,
         legendFontSize: 15,
         legendFontColor: "#7F7F7F",
       };
-      result.push(res[value.category]);
+      result.push(res[value.category.name]);
     }
-    res[value.category].amount += parseFloat(value.paymentAmount);
+    res[value.category.name].amount += parseFloat(
+      value.paymentAmount * value.currency.conversionRateToEuro
+    );
 
     return res;
   }, {});

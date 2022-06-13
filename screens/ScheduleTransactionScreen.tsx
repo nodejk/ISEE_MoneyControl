@@ -48,9 +48,9 @@ const DUMMY_TRANSACTIONS = [
   { id: 30, name: "expense5", amount: 30, type: "credit" },
 ];
 
-export function ScheduleTransactionsScreen({
-  navigation,
-}: RootTabScreenProps<any>) {
+export function ScheduleTransactionsScreen(
+  navigation: RootTabScreenProps<any>
+) {
   const colorScheme = useColorScheme();
   const backgroundColor = colorScheme === "dark" ? "black" : "white";
   const textColor = colorScheme === "dark" ? "white" : "black";
@@ -64,12 +64,12 @@ export function ScheduleTransactionsScreen({
   return (
     <View style={{ ...styles.container }}>
       <View style={{ backgroundColor: backgroundColor }}>
-        {/* <TransactionList
-          navigation={navigation}
+        <TransactionList
+          navigation1={navigation}
           header={"Scheduled"}
           route={undefined}
           scheduledTransactions={true}
-        ></TransactionList> */}
+        ></TransactionList>
       </View>
     </View>
   );

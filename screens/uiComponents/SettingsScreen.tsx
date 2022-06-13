@@ -15,14 +15,13 @@ import {
   ImageBackground,
 } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-
-import { Card } from "react-native-paper";
-import { EditProfileLayoutCard } from "./EditProfileLayoutCard";
-import { InputField } from "./InputField";
-import { Avatar, Caption, Title } from "react-native-paper";
 import { useEffect } from "react";
+import { UserProfileNavigationCard } from "./UserProfileNavigationCard";
+import Colors from "../../constants/Colors";
+import { RootTabScreenProps } from "../../types";
+import { v4 as uuid } from "uuid";
 
-export function SettingsScreen() {
+export function SettingsScreen(navigation: RootTabScreenProps<any>) {
   const colorScheme = useColorScheme();
   const borderWidth = 1;
   const borderRadius = 9;
@@ -31,8 +30,11 @@ export function SettingsScreen() {
   const cardBorderColor =
     colorScheme === "dark" ? "rgb(40, 40, 40)" : "rgb(220, 220, 220)";
   const textColor = colorScheme === "dark" ? "white" : "black";
-
+  const iconSize = 21;
+  const fontSize = 17;
   const keyboardVerticalOffset = 20;
+  const buttonColor =
+    colorScheme === "dark" ? "rgb(80, 80, 80)" : "rgb(200, 200, 200)";
 
   useEffect(() => {
     return () => {
@@ -62,35 +64,93 @@ export function SettingsScreen() {
           >
             Settings
           </Text>
-          <InputField
-            name={"First Name"}
-            backgroundColor={cardBackground}
-            borderColor={cardBorderColor}
-            borderTopWidth={borderWidth}
-            borderHorizontalWidth={borderWidth}
-            borderTopRadius={borderRadius}
-            placeholder={"Required"}
-          ></InputField>
-          <InputField
-            name={"Last Name"}
-            backgroundColor={cardBackground}
-            borderColor={cardBorderColor}
-            borderTopWidth={borderWidth}
-            borderHorizontalWidth={borderWidth}
-            placeholder={"Required"}
-          ></InputField>
-          <InputField
-            name={"Email"}
-            backgroundColor={cardBackground}
-            borderColor={cardBorderColor}
-            borderTopWidth={borderWidth}
-            borderHorizontalWidth={borderWidth}
-            borderBottomRadius={borderRadius}
-            borderBottomWidth={borderWidth}
-            placeholder={"Required"}
-          ></InputField>
+          <UserProfileNavigationCard
+            {...{
+              key: uuid(),
+              cardName: "Edit Categories",
+              topGap: 0,
+              topBorder: 1,
+              topBorderRadius: 10,
+              bottomBorderRadius: 0,
+              fontSize: fontSize,
+              children: [
+                <MaterialCommunityIcons
+                  name={"shape"}
+                  color={Colors["light"].tint}
+                  size={iconSize}
+                  key={uuid()}
+                />,
+              ],
+              navigation: navigation,
+              navigationScreen: "EditTransactionPropertiesModal",
+              routeParams: {
+                type: "category",
+                validator: (t: string) => {
+                  return t.length > 0;
+                },
+              },
+            }}
+          />
+
+          <UserProfileNavigationCard
+            {...{
+              key: uuid(),
+              cardName: "Edit Payment Methods",
+              topBorder: 1,
+              topBorderRadius: 0,
+              bottomBorderRadius: 10,
+              fontSize: fontSize,
+              children: [
+                <MaterialCommunityIcons
+                  name={"credit-card-edit-outline"}
+                  color={Colors["light"].tint}
+                  size={iconSize}
+                  key={uuid()}
+                />,
+              ],
+              navigation: navigation,
+              navigationScreen: "EditTransactionPropertiesModal",
+              routeParams: {
+                type: "paymentMethod",
+                validator: (t: string) => {
+                  return t.length > 0;
+                },
+              },
+            }}
+          />
+          {/* <UserProfileNavigationCard
+            {...{
+              key: uuid(),
+              cardName: "Edit Currencies",
+              topGap: 0,
+              topBorder: 1,
+              topBorderRadius: 0,
+              bottomBorderRadius: 10,
+              fontSize: fontSize,
+              children: [
+                <MaterialCommunityIcons
+                  name={"currency-eur"}
+                  color={Colors["light"].tint}
+                  size={iconSize}
+                  key={uuid()}
+                />,
+              ],
+              navigation: navigation,
+              navigationScreen: "EditTransactionPropertiesModal",
+              routeParams: {
+                type: "currency",
+                validator: (t: {
+                  currencyName: string;
+                  currencyConversionToEuro: number;
+                }) => {
+                  return (
+                    t.currencyName.length > 0 && t.currencyConversionToEuro > 0
+                  );
+                },
+              },
+            }}
+          /> */}
         </ScrollView>
-        {/* </View> */}
       </KeyboardAvoidingView>
     </SafeAreaView>
   );
