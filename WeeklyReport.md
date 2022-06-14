@@ -46,5 +46,12 @@ App Development Progress:
 •	Diagram progress
 Get some new bug for mapping data. We will work on this issues in next week. 
 
-Latest Branch: https://github.com/nodejk/ISEE_MoneyControl/tree/filterModalAndHelpSection
+## Week 07:
+•	Added a sync-account page with email validator and currency convertors.
+
+## Week 08:
+• Added a settings page, which allow the user to edit, add or delete categories and payment options.
+
+
+Latest Branch: https://github.com/nodejk/ISEE_MoneyControl/tree/currencyConversion
 
