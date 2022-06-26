@@ -49,9 +49,24 @@ Get some new bug for mapping data. We will work on this issues in next week.
 ## Week 07:
 •	Added a sync-account page with email validator and currency convertors.
 
+
 ## Week 08:
 • Added a settings page, which allow the user to edit, add or delete categories and payment options.
+• Added alert when the user is deleting a category or a payment method.
+• Added alert when the user is adding a wrong date in the transaction.
 
 
-Latest Branch: https://github.com/nodejk/ISEE_MoneyControl/tree/currencyConversion
+## Week 09: 
+• Added starting page for the appliation with a login page.
+• Added alert if the user is adding wrong credentials.
+
+
+## Week 10: 
+• Added Category budget. 
+• Created alert when the user is going over budget.
+
+
+
+
+Latest Branch: https://github.com/nodejk/ISEE_MoneyControl/tree/addedCategoryBudget
 
