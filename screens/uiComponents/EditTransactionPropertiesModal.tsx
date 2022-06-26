@@ -18,7 +18,11 @@ import { RootTabScreenProps } from "../../types";
 import useColorScheme from "../../hooks/useColorScheme";
 import { InputField } from "./InputField";
 import { HeaderButton } from "./HeaderButtons";
-import { TransactionDescription } from "../../interface";
+import {
+  category,
+  paymentMethod,
+  TransactionDescription,
+} from "../../interface";
 import { useContext } from "react";
 import { TransactionContext } from "../../store/TransactionContextProvider";
 import { InputFieldsList } from "./InputFieldsList";
@@ -27,6 +31,7 @@ import { v4 as uuid } from "uuid";
 import { Modal } from "react-native";
 import { UserContext } from "../../store/UserContextProvider";
 import Colors from "../../constants/Colors";
+import { EditTransactionModalPopup } from "./EditTransactionModalPopUp";
 
 interface navProps extends TransactionDescription {
   navigation: RootTabScreenProps<any>;
@@ -58,7 +63,9 @@ export function EditTransactionPropertiesModal(navigation: navProps) {
   const transactionContext = useContext(TransactionContext);
   const userContext = useContext(UserContext);
 
-  const [itemToEdit, setItemToEdit] = useState(null);
+  const [itemToEdit, setItemToEdit] = useState<category | null | paymentMethod>(
+    null
+  );
 
   const [confirmDeleteModalVisibility, setConfirmDeleteModalVisibility] =
     useState(false);
@@ -68,6 +75,10 @@ export function EditTransactionPropertiesModal(navigation: navProps) {
 
   function editmodalVisibilityHandler() {
     setEditOrAddModalVisibility(!editOrAddModalVisibility);
+  }
+
+  function resetItemHandler() {
+    setItemToEdit(null);
   }
 
   function confirmDeleteModalVisibilityHandler() {
@@ -112,6 +123,7 @@ export function EditTransactionPropertiesModal(navigation: navProps) {
                 style={{ height: 30 }}
                 onPress={() => {
                   if (typeToEdit === "category") {
+                    console.log(itemToEdit);
                     userContext.editUserDefinedCategories("delete", itemToEdit);
                   }
                   if (typeToEdit === "paymentMethod") {
@@ -158,183 +170,18 @@ export function EditTransactionPropertiesModal(navigation: navProps) {
   function editOrAddModal() {
     if (typeToEdit === "category") {
       console.log("itemToEdit-->", itemToEdit);
-      const startingText = itemToEdit === null ? "" : itemToEdit.name;
-      const [text, setText] = useState(startingText);
-
-      let existingThreshold = null;
-
-      if (itemToEdit !== null) {
-        for (var i = 0; i < userContext.budgetCategories.length; i++) {
-          if (userContext.budgetCategories[i].categoryId === itemToEdit.id) {
-            existingThreshold = userContext.budgetCategories[i];
-            break;
-          }
-        }
-      }
-
-      console.log("existingThreshold-->", existingThreshold);
-      const [categoryBudget, setCategoryBudget] = useState(
-        existingThreshold === null ? false : true
-      );
-      const [categoryThreshold, setCategoryBudgetThreshold] = useState(
-        existingThreshold === null
-          ? ""
-          : existingThreshold.thresholdBudget.toString()
-      );
-
-      console.log(categoryBudget === null);
 
       // console.log(userContext.budgetCategoFaries);
       // console.log(userContext.userDefinedCategory);
 
       return (
-        <View style={styles.modal}>
-          <Modal
-            animationType="slide"
-            transparent={true}
-            visible={editOrAddModalVisibility}
-            onRequestClose={() => {
-              Alert.alert("Modal has been closed.");
-              setEditOrAddModalVisibility(!editOrAddModalVisibility);
-            }}
-          >
-            <View style={styles.modal}>
-              <View
-                style={{ ...styles.modalView, backgroundColor: cardBackground }}
-              >
-                <Text
-                  style={{ color: textColor, marginBottom: 20, fontSize: 20 }}
-                >
-                  {itemToEdit === null ? "✨ Add ✨" : "Edit 😎"}
-                </Text>
-
-                <TextInput
-                  style={{
-                    color: textColor,
-                    ...styles.inputField,
-                    borderColor: cardBorderColor,
-                    borderWidth: 2,
-                    borderRadius: 10,
-                    padding: 10,
-                    display: "flex",
-                    position: "relative",
-                    width: 250,
-
-                    marginBottom: 20,
-                  }}
-                  placeholder={startingText}
-                  value={text}
-                  keyboardType={"default"}
-                  onChangeText={(txt) => {
-                    setText(txt);
-                  }}
-                />
-                {!categoryBudget ? (
-                  <Text
-                    style={{ color: textColor, marginBottom: 10, fontSize: 19 }}
-                  >
-                    Want to set up a budget?
-                  </Text>
-                ) : (
-                  <Text
-                    style={{ color: textColor, marginBottom: 10, fontSize: 19 }}
-                  >
-                    Budget Set
-                  </Text>
-                )}
-                <Switch
-                  trackColor={{ false: "#767577", true: "#32CD32" }}
-                  thumbColor={"#f4f3f4"}
-                  ios_backgroundColor="#3e3e3e"
-                  onValueChange={() => {
-                    setCategoryBudget(!categoryBudget);
-                  }}
-                  style={{ marginBottom: 15 }}
-                  value={categoryBudget}
-                ></Switch>
-
-                {categoryBudget ? (
-                  <TextInput
-                    style={{
-                      color: textColor,
-                      ...styles.inputField,
-                      borderColor: cardBorderColor,
-                      borderWidth: 2,
-                      borderRadius: 10,
-                      padding: 10,
-                      display: "flex",
-                      position: "relative",
-                      width: 250,
-
-                      marginBottom: 30,
-                    }}
-                    placeholder={existingThreshold?.thresholdBudget.toString()}
-                    value={categoryThreshold.toString()}
-                    keyboardType={"number-pad"}
-                    onChangeText={(txt) => {
-                      setCategoryBudgetThreshold(txt);
-                    }}
-                  />
-                ) : null}
-                <View
-                  style={{
-                    backgroundColor: "transparent",
-                    flexDirection: "row",
-                    justifyContent: "space-between",
-                    display: "flex",
-                  }}
-                >
-                  <TouchableOpacity
-                    style={{ height: 30, marginHorizontal: 30 }}
-                    onPress={() => {
-                      setItemToEdit(null);
-                      setText("");
-                      setCategoryBudget(false);
-                      setCategoryBudgetThreshold("");
-                      editmodalVisibilityHandler();
-                    }}
-                  >
-                    <Text style={{ fontSize: 20, color: Colors["light"].tint }}>
-                      cancel
-                    </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    style={{ height: 30, marginHorizontal: 30 }}
-                    onPress={() => {
-                      if (itemToEdit === null) {
-                        const newCategoryId: string = uuid();
-                        userContext.editUserDefinedCategories("add", {
-                          id: newCategoryId,
-                          name: text,
-                        });
-                        if (categoryBudget) {
-                          userContext.handleBudgetCategories(
-                            "add",
-                            newCategoryId,
-                            categoryThreshold
-                          );
-                        }
-                      } else {
-                        userContext.editUserDefinedCategories("edit", {
-                          id: itemToEdit.id,
-                          name: text,
-                        });
-                      }
-
-                      console.log(userContext.budgetCategories);
-                      setText("");
-                      editmodalVisibilityHandler();
-                    }}
-                  >
-                    <Text style={{ fontSize: 20, color: Colors["light"].tint }}>
-                      confirm
-                    </Text>
-                  </TouchableOpacity>
-                </View>
-              </View>
-            </View>
-          </Modal>
-        </View>
+        <EditTransactionModalPopup
+          key={uuid()}
+          resetItemHandler={resetItemHandler}
+          itemToEdit={itemToEdit}
+          editmodalVisibilityHandler={editmodalVisibilityHandler}
+          editOrAddModalVisibility={editOrAddModalVisibility}
+        ></EditTransactionModalPopup>
       );
     }
 

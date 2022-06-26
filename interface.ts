@@ -61,6 +61,8 @@ export interface ThresholdExpenseCategory {
 export interface category {
   id: string;
   name: string;
+  categoryBudgetSet: boolean;
+  categoryBudgetLimit: number;
 }
 
 export interface currency {

@@ -188,6 +188,34 @@ export default function UserProfileLayout(navigation: RootTabScreenProps<any>) {
             navigationScreen: "Help",
           }}
         />
+
+        <UserProfileNavigationCard
+          currency={"EURO"}
+          {...{
+            cardName: "Support",
+            key: "SupportPage",
+            topBorder: 1,
+            bottomBorder: 1,
+            topGap: 30,
+            fontSize: fontSize,
+            children: [
+              <MaterialCommunityIcons
+                name={"handshake-outline"}
+                color={Colors["light"].tint}
+                size={iconSize}
+                key={uuid()}
+              />,
+              <FontAwesome
+                name="chevron-right"
+                size={16}
+                color={buttonColor}
+                key={uuid()}
+              />,
+            ],
+            navigation: navigation,
+            navigationScreen: "SupportPage",
+          }}
+        />
       </View>
     </ScrollView>
   );

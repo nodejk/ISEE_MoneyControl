@@ -29,6 +29,7 @@ export type RootStackParamList = {
   FilterModalTabTwo: undefined;
   SyncAccount: undefined;
   EditTransactionPropertiesModal: undefined;
+  SupportPage: undefined;
   params: any;
 };
 

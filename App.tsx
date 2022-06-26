@@ -15,7 +15,7 @@ export default function App() {
   const colorScheme = useColorScheme();
   const backgroundColor = colorScheme === "dark" ? "black" : "white";
 
-  const [startingScreen, setStartingScreen] = React.useState(true);
+  const [startingScreen, setStartingScreen] = React.useState(false);
 
   function startingScreenHandler() {
     setStartingScreen(!startingScreen);

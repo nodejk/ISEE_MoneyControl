@@ -31,7 +31,12 @@ const options = [
 
 const defaultTransaction: TransactionDescription = {
   date: new Date(),
-  category: { id: "1", name: "Rent" },
+  category: {
+    id: "1",
+    name: "Rent",
+    categoryBudgetLimit: 0,
+    categoryBudgetSet: false,
+  },
   name: "",
   type: { id: "2", name: "Credit 🤑", type: "credit" },
   paymentAmount: 0,
@@ -64,7 +69,37 @@ export function TransactionModal(navigation: navProps) {
   const transactionContext = useContext(TransactionContext);
   const userContext = useContext(UserContext);
 
+  function checkOverBudget(categoryId: string, paymentAmount: number) {
+    const usertransaction = transactionContext.userTransactions;
+
+    const userCategorySpent = usertransaction.reduce((a, b) => {
+      if (b.type.name === "Debit 😢" && b.category.id === categoryId) {
+        return a + b.paymentAmount;
+      } else {
+        return a;
+      }
+    }, 0);
+
+    console.log("userCategorySpent-->?", userCategorySpent);
+    const categoryBudget = userContext.userDefinedCategory.filter(
+      (item) => item.id === categoryId
+    )[0];
+
+    const categoryBudgetLimit = categoryBudget.categoryBudgetLimit;
+
+    console.log("----->", paymentAmount, categoryBudgetLimit);
+    console.log(
+      "----->",
+      userCategorySpent + paymentAmount > categoryBudgetLimit
+    );
+    if (userCategorySpent + paymentAmount > categoryBudgetLimit) {
+      return true;
+    }
+    return false;
+  }
+
   const [modalVisible, setModalVisible] = useState(false);
+  const [overBudgetAlert, setOverBudgetAlert] = useState(false);
 
   const transaction: TransactionDescription =
     navigation.route.params?.transaction === undefined
@@ -203,6 +238,10 @@ export function TransactionModal(navigation: navProps) {
     setModalVisible(!modalVisible);
   }
 
+  function overBudgetAlertHandler() {
+    setOverBudgetAlert(!overBudgetAlert);
+  }
+
   function checkValidity(day: string, month: string, year: string) {
     if (day === "" && month === "" && year === "") {
       return true;
@@ -282,14 +321,19 @@ export function TransactionModal(navigation: navProps) {
                       : uuid(),
                 };
 
-                if (
-                  navigation.route.params!.transactionType === "editTransaction"
-                ) {
-                  transactionContext.editTransaction(addtransaction);
+                if (checkOverBudget(category.id, paymentAmount)) {
+                  overBudgetAlertHandler();
                 } else {
-                  transactionContext.addTransaction(addtransaction);
+                  if (
+                    navigation.route.params!.transactionType ===
+                    "editTransaction"
+                  ) {
+                    transactionContext.editTransaction(addtransaction);
+                  } else {
+                    transactionContext.addTransaction(addtransaction);
+                  }
+                  navigation.navigation.goBack();
                 }
-                navigation.navigation.goBack();
               } else {
                 modalVisibilityHandler();
               }
@@ -364,6 +408,27 @@ export function TransactionModal(navigation: navProps) {
                 </Text>
                 <Button
                   onPress={modalVisibilityHandler}
+                  title={"Close"}
+                ></Button>
+              </View>
+            </View>
+          </Modal>
+        </View>
+
+        <View style={styles.modal}>
+          <Modal
+            animationType="slide"
+            transparent={true}
+            visible={overBudgetAlert}
+            onRequestClose={overBudgetAlertHandler}
+          >
+            <View style={styles.modal}>
+              <View style={styles.modalView}>
+                <Text style={{ color: "red", marginBottom: 20, fontSize: 15 }}>
+                  woooh! you have crossed the budget! 😜
+                </Text>
+                <Button
+                  onPress={overBudgetAlertHandler}
                   title={"Close"}
                 ></Button>
               </View>

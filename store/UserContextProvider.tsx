@@ -10,10 +10,20 @@ import {
 } from "../interface";
 
 const defaultCategories: category[] = [
-  { id: "1", name: "Rent" },
-  { id: "2", name: "Groceries" },
-  { id: "3", name: "Salary" },
-  { id: "4", name: "Eat Out" },
+  { id: "1", name: "Rent", categoryBudgetLimit: 0, categoryBudgetSet: false },
+  {
+    id: "2",
+    name: "Groceries",
+    categoryBudgetLimit: 0,
+    categoryBudgetSet: false,
+  },
+  { id: "3", name: "Salary", categoryBudgetLimit: 0, categoryBudgetSet: false },
+  {
+    id: "4",
+    name: "Eat Out",
+    categoryBudgetLimit: 0,
+    categoryBudgetSet: false,
+  },
 ];
 
 const defaultPaymentMethod: paymentMethod[] = [
@@ -76,6 +86,7 @@ export const UserContextProvider: React.FC<{}> = (props) => {
   const [loginStatus, setLoginStatus] = useState(false);
 
   function userDefinedCategoryEditor(action: string, categoryToEdit: category) {
+    console.log("categoryToEdit-->", categoryToEdit);
     if (action === "delete") {
       setUserDefinedCategories(
         userDefinedCategories.filter(function (category) {
@@ -91,7 +102,12 @@ export const UserContextProvider: React.FC<{}> = (props) => {
 
       const newCategoryState = userDefinedCategories.map((category) => {
         if (category.id === categoryToEdit.id) {
-          return { ...category, name: categoryToEdit.name };
+          return {
+            ...category,
+            name: categoryToEdit.name,
+            categoryBudgetSet: categoryToEdit.categoryBudgetSet,
+            categoryBudgetLimit: categoryToEdit.categoryBudgetLimit,
+          };
         }
 
         return category;
