@@ -24,7 +24,6 @@ App Development Progress:
 Tutor’s Theo Langer Review: Complements on being the first team who was able to implement Dark and light mood. Team acknowledges is and hopes to continue in the upcoming days. 
 
 
-
 ## Week 04:
 App Development Progress: 
 •	Added Line Graph and Pie Chart functionality to Graphical Interface screen, along with adding filter modal to the screen.
@@ -65,8 +64,10 @@ Get some new bug for mapping data. We will work on this issues in next week.
 • Added Category budget. 
 • Created alert when the user is going over budget.
 
-
-
+## Week 11:
+• Added multiple starting screen.
+• Fixed bugs when adding category bydgets.
+• Added support page in the user profile.
 
 Latest Branch: https://github.com/nodejk/ISEE_MoneyControl/tree/addedCategoryBudget
 
