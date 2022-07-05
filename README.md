@@ -21,8 +21,8 @@
 
 ## Blog Articles 📓:
 
-1. [Basic Proptotype](https://github.com/nodejk/ISEE_MoneyControl/blob/master/BasicProptotype.md)
+1. [Basic Proptotype](https://github.com/nodejk/ISEE_MoneyControl/blob/finalPresentation/BasicProptotype.md)
 
-2. [Advanced Prototype](https://github.com/nodejk/ISEE_MoneyControl/blob/master/AdvancedPrototype.md)
+2. [Advanced Prototype](https://github.com/nodejk/ISEE_MoneyControl/blob/finalPresentation/AdvancedPrototype.md)
 
-3. [Final Prototype](https://github.com/nodejk/ISEE_Money/blob/master/FinalPresentation.md)
+3. [Final Prototype](https://github.com/nodejk/ISEE_MoneyControl/blob/finalPresentation/FinalPresentation.md)
