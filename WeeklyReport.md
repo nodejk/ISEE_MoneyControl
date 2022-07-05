@@ -80,4 +80,4 @@ Get some new bug for mapping data. We will work on this issues in next week.<br>
 • Added landscape feature in the application.<br>
 • Tested all the features if they are working.<br>
 
-Latest Branch:
+Latest Branch: https://github.com/nodejk/ISEE_MoneyControl/blob/finalPresentation
