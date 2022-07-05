@@ -101,4 +101,4 @@ Custom Categories can be added by navigating to Settings Screen inside User Prof
 
 ## Class Diagram
 
-<img src = "images/classDiagram.PNG" />
+<img src = "images/classDiagram.png" />
