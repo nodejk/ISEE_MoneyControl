@@ -94,7 +94,7 @@ export default function TabOneScreen(navigation: navProps) {
 
   if (navigation.route?.params !== undefined) {
     const filters = navigation.route?.params.filters;
-    console.log(filters);
+    // console.log(filters);
 
     userTransactions = FilterCategories(filters, userTransactions);
   }

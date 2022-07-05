@@ -2,7 +2,7 @@ import { ScrollView, StyleSheet } from "react-native";
 import useColorScheme from "../../hooks/useColorScheme";
 import { Text, View } from "../../components/Themed";
 import { Avatar, Caption, Title } from "react-native-paper";
-import React from "react";
+import React, { useContext } from "react";
 import { RootTabScreenProps } from "../../types";
 import { UserProfileNavigationCard } from "./UserProfileNavigationCard";
 import { FontAwesome } from "@expo/vector-icons";
@@ -10,6 +10,7 @@ import { NavigationProp, ParamListBase } from "@react-navigation/native";
 import Colors from "../../constants/Colors";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { v4 as uuid } from "uuid";
+import { UserContext } from "../../store/UserContextProvider";
 
 export default function UserProfileLayout(navigation: RootTabScreenProps<any>) {
   const colorScheme = useColorScheme();
@@ -17,7 +18,7 @@ export default function UserProfileLayout(navigation: RootTabScreenProps<any>) {
     colorScheme === "dark" ? "rgb(80, 80, 80)" : "rgb(200, 200, 200)";
   const iconSize = 21;
   const fontSize = 17;
-
+  const userContext = useContext(UserContext);
   return (
     <ScrollView>
       <View style={styles.container}>
@@ -37,7 +38,7 @@ export default function UserProfileLayout(navigation: RootTabScreenProps<any>) {
               ...styles.userProfileNameOverviewText,
             }}
           >
-            FirstName LastName
+            {userContext.firstName} {userContext.lastName}
           </Text>
         </View>
         <View style={styles.userProfileOverview}>

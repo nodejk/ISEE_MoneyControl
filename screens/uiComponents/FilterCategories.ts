@@ -1,10 +1,14 @@
-import { TransactionDescription } from "../../interface";
+import {
+  category,
+  paymentMethod,
+  TransactionDescription,
+} from "../../interface";
 
 interface filterProps {
-  category: string[];
+  category: category[];
   fromDate: { day: string; month: string; year: string };
   toDate: { day: string; month: string; year: string };
-  paymentMethod: string[];
+  paymentMethod: paymentMethod[];
   paymentAmount: { minPaymentAmount: string; maxPaymentAmount: string };
 }
 export function FilterCategories(
@@ -73,16 +77,23 @@ export function FilterCategories(
   if (filter.paymentMethod.length > 0) {
     console.log("5");
 
+    const paymentMethodToFilter: string[] = [];
+    for (var i = 0; i < filter.paymentMethod.length; i++) {
+      paymentMethodToFilter.push(filter.paymentMethod[i].id);
+    }
     transactions = transactions.filter((transaction) => {
-      return filter.paymentMethod.includes(transaction.paymentMethod);
+      return filter.paymentMethod.includes(transaction.paymentMethod?.id);
     });
   }
 
   if (filter.category.length > 0) {
-    console.log("6");
+    const categoriesToFilter: string[] = [];
+    for (var i = 0; i < filter.category.length; i++) {
+      categoriesToFilter.push(filter.category[i].id);
+    }
 
     transactions = transactions.filter((transaction) => {
-      return filter.category.includes(transaction.category);
+      return categoriesToFilter.includes(transaction.category.id);
     });
   }
 

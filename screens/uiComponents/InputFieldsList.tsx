@@ -79,7 +79,7 @@ export const InputFieldsList = React.forwardRef<any, propsInterface>(
       const closeMenu = () => setVisible(false);
       // console.log(props.selectionProps?.handleModalVisibility);
 
-      console.log("fieldname-->", props.fieldName, "text-->", text);
+      // console.log("fieldname-->", props.fieldName, "text-->", text);
       let selectedOptions = props.selectionProps?.selectedOptions;
 
       console.log(selectedOptions);

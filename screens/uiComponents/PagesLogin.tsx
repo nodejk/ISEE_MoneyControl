@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import { View, Text, TextInput, Button, StyleSheet, Modal } from "react-native";
 import { Feather as Icon, FontAwesome } from "@expo/vector-icons";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { InputField } from "./InputField";
+import { UserContext } from "../../store/UserContextProvider";
 
 export const PageLogin = ({
   backgroundColor,
@@ -27,22 +28,35 @@ export const PageLogin = ({
 
     return regEmail.test(email);
   }
+  const userContext = useContext(UserContext);
 
-  const [invalidCredentials, setInvalidCredentials] = React.useState(false);
+  const [firstName, setFirstName] = useState(userContext.firstName);
+  const [lastName, setLastName] = useState(userContext.lastName);
+
+  const [validCredentials, setValidCredentials] = React.useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
 
   function credentialValidator(email: string, password: string) {
-    setInvalidCredentials(!(emailValidator(email) && password.length >= 6));
+    setValidCredentials(emailValidator(email) && password.length >= 6);
   }
   function signupHandler() {
     console.log("{here");
     credentialValidator(email, password);
-    console.log(invalidCredentials);
+    console.log(validCredentials);
+    // console.log("invalidCredentials-->", invalidCredentials);
 
-    startingScreenHandler();
+    if (validCredentials) {
+      startingScreenHandler();
+      userContext.firstNameHandler(firstName);
+      userContext.lastNameHandler(lastName);
+      userContext.onLogin({ email, password });
+    } else {
+      setModalVisible(true);
+    }
   }
 
   function modalVisibilityHandler() {
-    setInvalidCredentials(!invalidCredentials);
+    setModalVisible(!modalVisible);
   }
 
   return (
@@ -57,7 +71,7 @@ export const PageLogin = ({
       >
         <MaterialCommunityIcons
           name={iconName}
-          size={162}
+          size={100}
           color={"white"}
         ></MaterialCommunityIcons>
 
@@ -76,9 +90,40 @@ export const PageLogin = ({
 
         <View style={{ flex: 1, display: "flex", width: "90%" }}>
           <InputField
-            name={"Email"}
+            name={"First Name"}
             backgroundColor={"rgba(50, 50, 50, 0.95)"}
             marginTop={30}
+            placeholder={"Optional"}
+          >
+            <TextInput
+              style={{ color: "white" }}
+              placeholder={"Optional"}
+              value={firstName}
+              onChangeText={(txt) => setFirstName(txt)}
+              keyboardType={"default"}
+              textAlign="right"
+            />
+          </InputField>
+          <InputField
+            name={"Last Name"}
+            backgroundColor={"rgba(50, 50, 50, 0.95)"}
+            marginTop={10}
+            placeholder={"Optional"}
+          >
+            <TextInput
+              style={{ color: "white" }}
+              placeholder={"Optional"}
+              value={lastName}
+              onChangeText={(txt) => setLastName(txt)}
+              keyboardType={"default"}
+              textAlign="right"
+            />
+          </InputField>
+
+          <InputField
+            name={"Email"}
+            backgroundColor={"rgba(50, 50, 50, 0.95)"}
+            marginTop={10}
             placeholder={"Required"}
           >
             <TextInput
@@ -120,9 +165,9 @@ export const PageLogin = ({
       <Modal
         animationType="slide"
         transparent={true}
-        visible={invalidCredentials}
+        visible={modalVisible}
         onRequestClose={() => {
-          setInvalidCredentials(!invalidCredentials);
+          setModalVisible(false);
         }}
       >
         <View style={styles.modal}>

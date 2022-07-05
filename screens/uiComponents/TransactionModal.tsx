@@ -92,7 +92,10 @@ export function TransactionModal(navigation: navProps) {
       "----->",
       userCategorySpent + paymentAmount > categoryBudgetLimit
     );
-    if (userCategorySpent + paymentAmount > categoryBudgetLimit) {
+    if (
+      userCategorySpent + paymentAmount > categoryBudgetLimit &&
+      categoryBudget.categoryBudgetSet
+    ) {
       return true;
     }
     return false;
@@ -124,9 +127,10 @@ export function TransactionModal(navigation: navProps) {
 
   const [additionalNote, setAdditionalNote] = useState(
     navigation.route.params?.additionalNote === undefined
-      ? ""
+      ? transaction.additionalNote
       : navigation.route.params!.additionalNote
   );
+  console.log(transaction);
 
   // const id = ;
   console.log(navigation.route.params);

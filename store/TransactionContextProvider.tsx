@@ -16,7 +16,7 @@ Moment.locale();
 const initialUserTransactionState: UserTransactionInterface = {
   userTransactions: [
     {
-      date: new Date("2022-05-10"),
+      date: new Date("2022-06-19"),
       name: "Rent 🏡",
       type: { id: "1", name: "Debit 😢", type: "debit" },
       category: {
@@ -33,7 +33,7 @@ const initialUserTransactionState: UserTransactionInterface = {
       id: "123",
     },
     {
-      date: new Date("2022-06-03"),
+      date: new Date("2022-07-03"),
       name: "Groceries 🛒",
       type: { id: "1", name: "Debit 😢", type: "debit", categoryBudget: 0 },
       category: {
@@ -49,7 +49,7 @@ const initialUserTransactionState: UserTransactionInterface = {
       id: "3432",
     },
     {
-      date: new Date("2022-06-01"),
+      date: new Date("2022-07-01"),
       name: "Salary 💵",
       type: { id: "2", name: "Credit 🤑", type: "credit" },
       category: {
@@ -67,7 +67,7 @@ const initialUserTransactionState: UserTransactionInterface = {
       id: "4543",
     },
     {
-      date: new Date("2022-03-01"),
+      date: new Date("2022-07-01"),
       name: "Beer",
       type: { id: "1", name: "Debit 😢", type: "debit" },
       category: {
@@ -86,7 +86,7 @@ const initialUserTransactionState: UserTransactionInterface = {
     },
 
     {
-      date: new Date("2022-05-16"),
+      date: new Date("2022-06-16"),
       name: "McDonalds 🍔",
       type: { id: "1", name: "Debit 😢", type: "debit" },
       category: {

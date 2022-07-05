@@ -48,6 +48,8 @@ export const UserContext = React.createContext<UserDescriptionInterface>({
   firstName: "",
   lastName: "",
   loginEmail: "",
+  firstNameHandler: () => {},
+  lastNameHandler: () => {},
   onLogin: (credentials: userCredentials) => {},
   onLogout: () => {},
   userId: "",
@@ -73,6 +75,9 @@ export const UserContext = React.createContext<UserDescriptionInterface>({
 export const UserContextProvider: React.FC<{}> = (props) => {
   const [userDefinedCategories, setUserDefinedCategories] =
     useState(defaultCategories);
+
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
 
   const [userDefinedPaymentMethod, setUserDefinedPaymentMethod] =
     useState(defaultPaymentMethod);
@@ -218,8 +223,10 @@ export const UserContextProvider: React.FC<{}> = (props) => {
   const defualtUserState = {
     income: 0,
     thresholdExpense: [],
-    firstName: "",
-    lastName: "",
+    firstName: firstName,
+    lastName: lastName,
+    firstNameHandler: setFirstName,
+    lastNameHandler: setLastName,
     loginEmail: "",
     onLogin: loginHandler,
     onLogout: logoutHandler,

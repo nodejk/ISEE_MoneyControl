@@ -124,6 +124,7 @@ export function TransactionList(navigation: navProps) {
           type={item.type}
           paymentAmount={item.paymentAmount}
           currency={item.currency}
+          additionalNote={item.additionalNote}
           id={item.id}
           navigation={navigation.navigation1}
           navigationScreen={"AddTransaction"}

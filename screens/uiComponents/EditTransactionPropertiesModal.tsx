@@ -82,7 +82,6 @@ export function EditTransactionPropertiesModal(navigation: navProps) {
   }
 
   function confirmDeleteModalVisibilityHandler() {
-    setItemToEdit(null);
     setConfirmDeleteModalVisibility(!confirmDeleteModalVisibility);
   }
 

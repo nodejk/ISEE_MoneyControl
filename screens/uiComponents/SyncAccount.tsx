@@ -60,8 +60,6 @@ export function SyncAccount(navigation: RootTabScreenProps<any>) {
     function loginSignUpHandler() {
       credentialValidator(email, password);
       if (credentialsValid) {
-        // FirebaseLoginHandler(email, password, newUserSignup);
-
         userContext.onLogin({ email, password });
         setEmail("");
         setPassword("");
@@ -71,8 +69,6 @@ export function SyncAccount(navigation: RootTabScreenProps<any>) {
     function signInHandler() {
       credentialValidator(email, password);
       if (credentialsValid) {
-        // FirebaseLoginHandler(email, password, newUserSignup);
-
         userContext.onLogin({ email, password });
         setEmail("");
         setPassword("");

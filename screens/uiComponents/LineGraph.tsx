@@ -20,6 +20,7 @@ function transactionCompiler(transactions: TransactionDescription[]) {
 
   console.log(prior30Date);
   const prior30DaysTransactions = transactions.filter((transaction) => {
+    console.log(transaction.date.getTime(), prior30Date.getTime());
     return transaction.date.getTime() >= prior30Date.getTime();
   });
 
@@ -88,7 +89,7 @@ export function LineGraph(props: { data: any[] }) {
   const windowHeight = useWindowDimensions().height;
 
   const compiledTrx = transactionCompiler(props.data);
-
+  // console.log(props.data);
   let labels = [];
   let data = [];
 

@@ -1,5 +1,5 @@
 import { FontAwesome } from "@expo/vector-icons";
-import React from "react";
+import React, { useContext, useState } from "react";
 import {
   StyleSheet,
   useColorScheme,
@@ -21,6 +21,8 @@ import { EditProfileLayoutCard } from "./uiComponents/EditProfileLayoutCard";
 import { InputField } from "./uiComponents/InputField";
 import { Avatar, Caption, Title } from "react-native-paper";
 import { useEffect } from "react";
+import { UserContext } from "../store/UserContextProvider";
+
 export default function EditProfileScreen() {
   const colorScheme = useColorScheme();
   const borderWidth = 1;
@@ -38,6 +40,17 @@ export default function EditProfileScreen() {
     };
   });
 
+  const userContext = useContext(UserContext);
+
+  const [firstName, setFirstName] = useState(userContext.firstName);
+  const [lastName, setLastName] = useState(userContext.lastName);
+
+  useEffect(() => {
+    return () => {
+      userContext.firstNameHandler(firstName);
+      userContext.lastNameHandler(lastName);
+    };
+  });
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <KeyboardAvoidingView
@@ -71,17 +84,6 @@ export default function EditProfileScreen() {
               size={25}
               name={"pencil-outline"}
             ></MaterialCommunityIcons>
-
-            {/* <Avatar.Image
-              source={{
-                uri: ,
-              }}
-              size={150}
-            />
-            <MaterialCommunityIcons
-              style={styles.editIcon}
-              name={"pencil-outline"}
-            ></MaterialCommunityIcons> */}
           </View>
           <InputField
             name={"First Name"}
@@ -91,17 +93,20 @@ export default function EditProfileScreen() {
             borderHorizontalWidth={borderWidth}
             borderTopRadius={borderRadius}
             placeholder={"Required"}
-          ></InputField>
+          >
+            <TextInput
+              style={{ color: "white" }}
+              placeholder={"Required"}
+              value={firstName}
+              onChangeText={(txt) => {
+                setFirstName(txt);
+              }}
+              keyboardType={"default"}
+              textAlign="right"
+            />
+          </InputField>
           <InputField
             name={"Last Name"}
-            backgroundColor={cardBackground}
-            borderColor={cardBorderColor}
-            borderTopWidth={borderWidth}
-            borderHorizontalWidth={borderWidth}
-            placeholder={"Required"}
-          ></InputField>
-          <InputField
-            name={"Email"}
             backgroundColor={cardBackground}
             borderColor={cardBorderColor}
             borderTopWidth={borderWidth}
@@ -109,9 +114,19 @@ export default function EditProfileScreen() {
             borderBottomRadius={borderRadius}
             borderBottomWidth={borderWidth}
             placeholder={"Required"}
-          ></InputField>
+          >
+            <TextInput
+              style={{ color: "white" }}
+              placeholder={"Required"}
+              value={lastName}
+              onChangeText={(txt) => {
+                setLastName(txt);
+              }}
+              keyboardType={"default"}
+              textAlign="right"
+            />
+          </InputField>
         </ScrollView>
-        {/* </View> */}
       </KeyboardAvoidingView>
     </SafeAreaView>
   );

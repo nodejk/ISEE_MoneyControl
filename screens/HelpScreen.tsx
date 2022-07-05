@@ -168,11 +168,44 @@ export default function HelpScreen() {
               marginBottom: 10,
             }}
           >
+            Want to add a new category or payment method 📝?
+          </Text>
+
+          <Text style={{ ...styles.paragraph, color: textColor }}>
+            Go to settings, and click either edit category or payment methods.
+            Click Add Category or Add Payment Method. Budgets can be set for
+            each category by simply clicking on the category or while adding a
+            new category.
+          </Text>
+          <Text
+            style={{
+              ...styles.subheading,
+              color: textColor,
+              marginTop: 25,
+              marginBottom: 10,
+            }}
+          >
             [Bonus] Switch between dark and light modes ✨
           </Text>
 
           <Text style={{ ...styles.paragraph, color: textColor }}>
             Change your system setting and MoneyIO will take care of the rest.
+          </Text>
+
+          <Text
+            style={{
+              ...styles.subheading,
+              color: textColor,
+              marginTop: 25,
+              marginBottom: 10,
+            }}
+          >
+            [Bonus] Switch between Potrait and Landscape Modes 🔁
+          </Text>
+
+          <Text style={{ ...styles.paragraph, color: textColor }}>
+            Simply enable rotation, rotate your phone and MoneyIO will take care
+            of the rest.
           </Text>
 
           <Text style={{ fontSize: 15, color: textColor, marginTop: 25 }}>

@@ -20,6 +20,8 @@ export interface UserDescriptionInterface {
   firstName?: string;
   lastName?: string;
   loginEmail: string;
+  firstNameHandler: (firstName: string) => void;
+  lastNameHandler: (lastName: string) => void;
   onLogin: (credentials: userCredentials) => void;
   onLogout: () => void;
   loginStatus: boolean;
