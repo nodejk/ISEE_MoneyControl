@@ -69,5 +69,5 @@ Get some new bug for mapping data. We will work on this issues in next week.
 • Fixed bugs when adding category bydgets.
 • Added support page in the user profile.
 
-Latest Branch: https://github.com/nodejk/ISEE_MoneyControl/tree/addedCategoryBudget
+Latest Branch: https://github.com/nodejk/ISEE_MoneyControl
 
