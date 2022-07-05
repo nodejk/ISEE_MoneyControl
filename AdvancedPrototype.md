@@ -34,7 +34,7 @@ Added Email Validator in order to validate email format.
 Clicking on "Add..." will add a new type and clicking on the item will open a edit modal. Further, clicking on the bin item will delete the item.
 
 <img src = "images/IMG-1685.PNG" width ="300" /><img src = "images/IMG-1687.PNG" width ="300" /><img src = "images/IMG-1697.PNG" width ="300" />
-<img src = "images/IMG-1688.PNG" width ="300" /><img src = "images/IMG-1689.PNG" width ="300" /><img src = "images/IMG-1690.PNG" width ="300" /><img src = "images/IMG-1691.PNG" width ="300" />
+<img src = "images/IMG-1688.PNG" width ="300" /><img src = "images/IMG-1689.PNG" width ="300" />
 
 
 
