@@ -11,6 +11,8 @@
 5. Open: http://localhost/19002
 6. Switch from LAN to Tunnel.
 
+Note: The application is NOT optimized for Android. Please use iOS for the best experience =)
+
 ### Running on phone 📱:
 
 1. [Download Expo Go](https://expo.dev/client)
