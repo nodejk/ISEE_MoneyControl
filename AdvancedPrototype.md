@@ -20,12 +20,11 @@ categoryId: string,
 ThresholdValue: number,
 
 
-
 ## UI Feature:
 
 ### Sync Page (User Page --> Sync Account)
 
-Added Email Validator in order to validate email format.
+Added Email Validator in order to validate email format.<br/>
 <img src = "images/IMG-1684.PNG" width ="300" />
 
 
