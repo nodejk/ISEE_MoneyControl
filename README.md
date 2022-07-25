@@ -4,7 +4,7 @@
 
 ### Computer Setup 💻:
 
-1. [Install npm and node on the system](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
+1. [Install npm and node on the system](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm) (use version 16)
 2. Clone the repository and open the directory.
 3. RUN: `npm install`
 4. To run the application run: `expo start`
